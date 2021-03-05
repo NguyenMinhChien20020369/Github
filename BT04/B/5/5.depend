@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1614957777 source:d:\chuan_muc\github\bt04\b\5\randomnumbergeneration.cpp
+	<bits/stdc++.h>
+
+1614957858 source:d:\chuan_muc\github\bt04\b\5\main.cpp
+	<bits/stdc++.h>
+	"randomNumberGeneration.h"
+
+1614928681 d:\chuan_muc\github\bt04\b\5\randomnumbergeneration.h
+

@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1614955602 source:d:\chuan_muc\github\bt04\a\3\main.cpp
+	<bits/stdc++.h>
+	"randomNumberGeneration.h"
+	"bubbleSort.h"
+
+1614928681 d:\chuan_muc\github\bt04\a\3\randomnumbergeneration.h
+
+1614927155 d:\chuan_muc\github\bt04\a\3\bubblesort.h
+
+1614943981 source:d:\chuan_muc\github\bt04\a\3\myfind.cpp
+	<bits/stdc++.h>
+
+1614955705 source:d:\chuan_muc\github\bt04\a\3\randomnumbergeneration.cpp
+	<bits/stdc++.h>
+
+1614955616 source:d:\chuan_muc\github\bt04\a\3\bubblesort.cpp
+	<bits/stdc++.h>
+	"myFind.h"
+
+1614943534 d:\chuan_muc\github\bt04\a\3\myfind.h
+

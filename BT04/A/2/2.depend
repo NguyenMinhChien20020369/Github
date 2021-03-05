@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1614943981 source:d:\chuan_muc\github\bt04\a\2\myfind.cpp
+	<bits/stdc++.h>
+
+1614944906 source:d:\chuan_muc\github\bt04\a\2\main.cpp
+	<bits/stdc++.h>
+	"myFind.h"
+	"randomNumberGeneration.h"
+
+1614943534 d:\chuan_muc\github\bt04\a\2\myfind.h
+
+1614928681 d:\chuan_muc\github\bt04\a\2\randomnumbergeneration.h
+
+1614944835 source:d:\chuan_muc\github\bt04\a\2\randomnumbergeneration.cpp
+	<bits/stdc++.h>
+
