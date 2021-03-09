@@ -31,8 +31,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="SDL_utils.cpp" />
-		<Unit filename="SDL_utils.h" />
+		<Unit filename="SDL_setup.cpp" />
+		<Unit filename="SDL_setup.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

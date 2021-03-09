@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include <SDL.h>
-#include "SDL_utils.h"
+#include "SDL_setup.h"
 
 using namespace std;
 
@@ -108,7 +108,7 @@ int main(int argc,char* argv[])
     SDL_Window* window;
     SDL_Renderer* renderer;
     initSDL(window,renderer);
-    bool Exit=false;
+    bool Exit=false,Can_move;
 
     Snake snake(0,0);
     snake.position_arr.push_back(snake.position);
@@ -135,18 +135,25 @@ int main(int argc,char* argv[])
                 if(e.type==SDL_QUIT) break;
                 if(e.type==SDL_KEYDOWN)
                 {
-                    switch (e.key.keysym.sym)
-                    {
-                        case SDLK_ESCAPE: Exit=true; break;
-                        if(befor.key.keysym.sym==SDLK_RIGHT){}else {case SDLK_LEFT: snake.turnLeft(); break;}
-                        if(befor.key.keysym.sym==SDLK_LEFT){}else {case SDLK_RIGHT: snake.turnRight(); break;}
-                        if(befor.key.keysym.sym==SDLK_UP){}else {case SDLK_DOWN: snake.turnDown(); break;}
-                        if(befor.key.keysym.sym==SDLK_DOWN){}else {case SDLK_UP: snake.turnUp(); break;}
-                        default: break;
+                    Can_move=true;
+                    if(befor.key.keysym.sym==SDLK_RIGHT&&e.key.keysym.sym==SDLK_LEFT){
+                    Can_move=false;}
+                    if(befor.key.keysym.sym==SDLK_LEFT&&e.key.keysym.sym==SDLK_RIGHT){Can_move=false;}
+                    if(befor.key.keysym.sym==SDLK_UP&&e.key.keysym.sym==SDLK_DOWN){Can_move=false;}
+                    if(befor.key.keysym.sym==SDLK_DOWN&&e.key.keysym.sym==SDLK_UP){Can_move=false;}
+                    if(Can_move){
+                        switch (e.key.keysym.sym)
+                        {
+                            case SDLK_ESCAPE: Exit=true; break;
+                            case SDLK_LEFT: snake.turnLeft(); break;
+                            case SDLK_RIGHT: snake.turnRight(); break;
+                            case SDLK_DOWN: snake.turnDown(); break;
+                            case SDLK_UP: snake.turnUp(); break;
+                            default: break;
+                        }
+                        if(Exit)break;
+                        befor.key.keysym.sym=e.key.keysym.sym;
                     }
-                    if(Exit)break;
-                    befor.key.keysym.sym=e.key.keysym.sym;
-                    cout<<befor.key.keysym.sym<<endl;
                 }
             }
         snake.eat(point);
