@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1615279706 source:d:\chuan_muc\github\snake\main.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+	"SDL_utils.h"
+
+1615211669 d:\chuan_muc\github\snake\sdl_utils.h
+	<bits/stdc++.h>
+	<SDL.h>
+
+1615221038 source:d:\chuan_muc\github\snake\sdl_utils.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+
