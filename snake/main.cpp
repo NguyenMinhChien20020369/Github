@@ -149,6 +149,10 @@ int main(int argc,char* argv[])
                             case SDLK_RIGHT: snake.turnRight(); break;
                             case SDLK_DOWN: snake.turnDown(); break;
                             case SDLK_UP: snake.turnUp(); break;
+                            case SDLK_a: snake.turnLeft(); break;
+                            case SDLK_d: snake.turnRight(); break;
+                            case SDLK_s: snake.turnDown(); break;
+                            case SDLK_w: snake.turnUp(); break;
                             default: break;
                         }
                         if(Exit)break;
