@@ -1,11 +1,9 @@
 #include <bits/stdc++.h>
 #include <SDL.h>
+#include "SDL_setup.h"
 
 using namespace std;
 
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
-const string WINDOW_TITLE="Snake";
 
 void logSDLError(ostream& os, const string &msg, bool fatal)
 {

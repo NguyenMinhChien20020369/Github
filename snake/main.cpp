@@ -1,106 +1,11 @@
 #include <bits/stdc++.h>
 #include <SDL.h>
 #include "SDL_setup.h"
+#include "Position.h"
+#include "Point.h"
+#include "Snake.h"
 
 using namespace std;
-
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
-const string WINDOW_TITLE="Snake";
-int time_delay=50;
-
-struct Position{
-    int size=10;
-    int x=(rand()%(SCREEN_WIDTH/10-size+1))*10;
-    int y=(rand()%(SCREEN_HEIGHT/10-size+1))*10;
-};
-
-struct Point {
-    int size=10;
-    Position position;
-
-    void render(SDL_Renderer* renderer)
-    {
-        SDL_Rect filled_rect;
-        filled_rect.x=this->position.x;
-        filled_rect.y=this->position.y;
-        filled_rect.w=this->size;
-        filled_rect.h=this->size;
-        SDL_SetRenderDrawColor(renderer,0,255,0,255);
-        SDL_RenderFillRect(renderer,&filled_rect);
-    }
-};
-
-struct Snake {
-    Position position;
-    int size=10;
-    int stepX=0;
-    int stepY=0;
-    int num=10;
-    vector<Position> position_arr;
-
-    Snake(int _x,int _y){
-        this->position.x=_x;
-        this->position.y=_y;
-    }
-    void render(SDL_Renderer* renderer)
-    {
-        for(int i=0;i<position_arr.size();i++)
-        {
-            SDL_Rect filled_rect;
-            filled_rect.x=position_arr[i].x;
-            filled_rect.y=position_arr[i].y;
-            filled_rect.w=size;
-            filled_rect.h=size;
-            SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-            SDL_RenderFillRect(renderer, &filled_rect);
-        }
-    }
-
-    void move()
-    {
-        for(int i=position_arr.size()-1;i>0;i--){
-            position_arr[i]=position_arr[i-1];
-        }
-        position_arr[0].x+=stepX;
-        position_arr[0].y+=stepY;
-        if(position_arr[0].y>SCREEN_HEIGHT)position_arr[0].y=0;
-        if(position_arr[0].y<0)position_arr[0].y=SCREEN_HEIGHT-size;
-        if(position_arr[0].x>SCREEN_WIDTH)position_arr[0].x=0;
-        if(position_arr[0].x<0)position_arr[0].x=SCREEN_WIDTH-size;
-    }
-
-    void turnUp()
-    {
-        stepY=-num;
-        stepX=0;
-    }
-
-    void turnDown()
-    {
-        stepY=num;
-        stepX=0;
-    }
-
-    void turnLeft()
-    {
-        stepX=-num;
-        stepY=0;
-    }
-
-    void turnRight()
-    {
-        stepX=num;
-        stepY=0;
-    }
-    void eat(Point &point){
-        if(this->position_arr[0].x==point.position.x&&this->position_arr[0].y==point.position.y){
-            this->position_arr.push_back(point.position);
-            point.position.x=(rand()%(SCREEN_WIDTH/10-size+1))*10;
-            point.position.y=(rand()%(SCREEN_HEIGHT/10-size+1))*10;
-        }
-    }
-};
 
 int main(int argc,char* argv[])
 {
