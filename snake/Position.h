@@ -8,7 +8,8 @@
 
 using namespace std;
 
-struct Position{
+struct Position
+{
     int size=10;
     int x=(rand()%(SCREEN_WIDTH/10-size+1))*10;
     int y=(rand()%(SCREEN_HEIGHT/10-size+1))*10;

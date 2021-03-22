@@ -20,8 +20,10 @@ int main(int argc,char* argv[])
     Point point;
 
     SDL_Event e,befor;
-    while(true){
-        for(int i=1;i<snake.position_arr.size();i++){
+    while(true)
+    {
+        for(int i=1; i<snake.position_arr.size(); i++)
+        {
             if(snake.position_arr[0].x==snake.position_arr[i].x&&snake.position_arr[0].y==snake.position_arr[i].y)Exit=true;
         }
         if(Exit)break;
@@ -35,36 +37,68 @@ int main(int argc,char* argv[])
 
         SDL_Delay(time_delay);
 
-        if(SDL_PollEvent(&e)==0){}else
+        if(SDL_PollEvent(&e)==0) {}
+        else
+        {
+            if(e.type==SDL_QUIT) break;
+            if(e.type==SDL_KEYDOWN)
             {
-                if(e.type==SDL_QUIT) break;
-                if(e.type==SDL_KEYDOWN)
+                Can_move=true;
+                if(befor.key.keysym.sym==SDLK_RIGHT&&e.key.keysym.sym==SDLK_LEFT)
                 {
-                    Can_move=true;
-                    if(befor.key.keysym.sym==SDLK_RIGHT&&e.key.keysym.sym==SDLK_LEFT){
-                    Can_move=false;}
-                    if(befor.key.keysym.sym==SDLK_LEFT&&e.key.keysym.sym==SDLK_RIGHT){Can_move=false;}
-                    if(befor.key.keysym.sym==SDLK_UP&&e.key.keysym.sym==SDLK_DOWN){Can_move=false;}
-                    if(befor.key.keysym.sym==SDLK_DOWN&&e.key.keysym.sym==SDLK_UP){Can_move=false;}
-                    if(Can_move){
-                        switch (e.key.keysym.sym)
-                        {
-                            case SDLK_ESCAPE: Exit=true; break;
-                            case SDLK_LEFT: snake.turnLeft(); break;
-                            case SDLK_RIGHT: snake.turnRight(); break;
-                            case SDLK_DOWN: snake.turnDown(); break;
-                            case SDLK_UP: snake.turnUp(); break;
-                            case SDLK_a: snake.turnLeft(); break;
-                            case SDLK_d: snake.turnRight(); break;
-                            case SDLK_s: snake.turnDown(); break;
-                            case SDLK_w: snake.turnUp(); break;
-                            default: break;
-                        }
-                        if(Exit)break;
-                        befor.key.keysym.sym=e.key.keysym.sym;
+                    Can_move=false;
+                }
+                if(befor.key.keysym.sym==SDLK_LEFT&&e.key.keysym.sym==SDLK_RIGHT)
+                {
+                    Can_move=false;
+                }
+                if(befor.key.keysym.sym==SDLK_UP&&e.key.keysym.sym==SDLK_DOWN)
+                {
+                    Can_move=false;
+                }
+                if(befor.key.keysym.sym==SDLK_DOWN&&e.key.keysym.sym==SDLK_UP)
+                {
+                    Can_move=false;
+                }
+                if(Can_move)
+                {
+                    switch (e.key.keysym.sym)
+                    {
+                    case SDLK_ESCAPE:
+                        Exit=true;
+                        break;
+                    case SDLK_LEFT:
+                        snake.turnLeft();
+                        break;
+                    case SDLK_RIGHT:
+                        snake.turnRight();
+                        break;
+                    case SDLK_DOWN:
+                        snake.turnDown();
+                        break;
+                    case SDLK_UP:
+                        snake.turnUp();
+                        break;
+                    case SDLK_a:
+                        snake.turnLeft();
+                        break;
+                    case SDLK_d:
+                        snake.turnRight();
+                        break;
+                    case SDLK_s:
+                        snake.turnDown();
+                        break;
+                    case SDLK_w:
+                        snake.turnUp();
+                        break;
+                    default:
+                        break;
                     }
+                    if(Exit)break;
+                    befor.key.keysym.sym=e.key.keysym.sym;
                 }
             }
+        }
         snake.eat(point);
         snake.move();
     };

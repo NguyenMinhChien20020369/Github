@@ -9,7 +9,8 @@
 
 using namespace std;
 
-struct Snake {
+struct Snake
+{
     Position position;
     int size=10;
     int stepX=0;
@@ -18,13 +19,14 @@ struct Snake {
     int times=0;
     vector<Position> position_arr;
 
-    Snake(int _x,int _y){
+    Snake(int _x,int _y)
+    {
         this->position.x=_x;
         this->position.y=_y;
     }
     void render(SDL_Renderer* renderer)
     {
-        for(int i=0;i<position_arr.size();i++)
+        for(int i=0; i<position_arr.size(); i++)
         {
             SDL_Rect filled_rect;
             filled_rect.x=position_arr[i].x;
@@ -38,7 +40,8 @@ struct Snake {
 
     void move()
     {
-        for(int i=position_arr.size()-1;i>0;i--){
+        for(int i=position_arr.size()-1; i>0; i--)
+        {
             position_arr[i]=position_arr[i-1];
         }
         position_arr[0].x+=stepX;
@@ -72,21 +75,27 @@ struct Snake {
         stepX=num;
         stepY=0;
     }
-    void eat(Point &point){
+    void eat(Point &point)
+    {
         if(this->times==threshold_appears_big_point&&this->position_arr[0].x>=point.position.x&&this->position_arr[0].x<=point.position.x + point.size - this->size
-           &&this->position_arr[0].y>=point.position.y&&this->position_arr[0].y<=point.position.y + point.size - this->size){
+                &&this->position_arr[0].y>=point.position.y&&this->position_arr[0].y<=point.position.y + point.size - this->size)
+        {
             this->times=0;
             this->position_arr.push_back(point.position);
             point.position.x=(rand()%(SCREEN_WIDTH/10-1))*10;
             point.position.y=(rand()%(SCREEN_HEIGHT/10-1))*10;
             point.size=10;
-        }else
-        if(this->position_arr[0].x==point.position.x&&this->position_arr[0].y==point.position.y){
+        }
+        else if(this->position_arr[0].x==point.position.x&&this->position_arr[0].y==point.position.y)
+        {
             this->times++;
             this->position_arr.push_back(point.position);
             point.position.x=(rand()%(SCREEN_WIDTH/10))*10;
             point.position.y=(rand()%(SCREEN_HEIGHT/10))*10;
-            if(this->times==threshold_appears_big_point){point.size=20;}
+            if(this->times==threshold_appears_big_point)
+            {
+                point.size=20;
+            }
         }
     }
 };

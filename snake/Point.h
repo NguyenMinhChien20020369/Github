@@ -8,7 +8,8 @@
 
 using namespace std;
 
-struct Point {
+struct Point
+{
     int size=10;
     Position position;
 
