@@ -12,10 +12,10 @@ using namespace std;
 struct Snake
 {
     Position position;
-    int size=10;
+    int size=20;
     int stepX=0;
     int stepY=0;
-    int num=10;
+    int num=20;
     int times=0;
     vector<Position> position_arr;
 
@@ -28,13 +28,60 @@ struct Snake
     {
         for(int i=0; i<position_arr.size(); i++)
         {
-            SDL_Rect filled_rect;
-            filled_rect.x=position_arr[i].x;
-            filled_rect.y=position_arr[i].y;
-            filled_rect.w=size;
-            filled_rect.h=size;
-            SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-            SDL_RenderFillRect(renderer, &filled_rect);
+            if(i==0)
+            {
+                tempSurface=SDL_LoadBMP(head);
+            }
+            else if(i==position_arr.size()-1)
+            {
+                if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y<position_arr[i].y)
+                {
+                    tail="snake_tail_bot.bmp";
+                }
+                else if(position_arr[i-1].x<position_arr[i].x&&position_arr[i-1].y==position_arr[i].y)
+                {
+                    tail="snake_tail_right.bmp";
+                }
+                else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y>position_arr[i].y)
+                {
+                    tail="snake_tail_top.bmp";
+                }
+                else if(position_arr[i-1].x>position_arr[i].x&&position_arr[i-1].y==position_arr[i].y)
+                {
+                    tail="snake_tail_left.bmp";
+                }
+                tempSurface=SDL_LoadBMP(tail);
+            }
+            else
+            {
+                if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y<position_arr[i].y)
+                {
+                    body="snake_body_vertical.bmp";
+                }
+                else if(position_arr[i-1].x<position_arr[i].x&&position_arr[i-1].y==position_arr[i].y)
+                {
+                    body="snake_body_horizontal.bmp";
+                }
+                else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y>position_arr[i].y)
+                {
+                    body="snake_body_vertical.bmp";
+                }
+                else if(position_arr[i-1].x>position_arr[i].x&&position_arr[i-1].y==position_arr[i].y)
+                {
+                    body="snake_body_horizontal.bmp";
+                }
+                tempSurface=SDL_LoadBMP(body);
+            }
+            texture=SDL_CreateTextureFromSurface(renderer, tempSurface);
+            SDL_FreeSurface(tempSurface);
+            SDL_QueryTexture(texture, NULL, NULL, &sourceRect.w,&sourceRect.h);
+            sourceRect.x=0;
+            sourceRect.y=0;
+            desRect.x=position_arr[i].x;
+            desRect.y=position_arr[i].y;
+            desRect.w=size;
+            desRect.h=size;
+            SDL_RenderCopy(renderer,texture,&sourceRect,&desRect);
         }
     }
 
@@ -77,16 +124,17 @@ struct Snake
     }
     void eat(Point &point)
     {
-        if(this->times==threshold_appears_big_point&&this->position_arr[0].x>=point.position.x&&this->position_arr[0].x<=point.position.x + point.size - this->size
-                &&this->position_arr[0].y>=point.position.y&&this->position_arr[0].y<=point.position.y + point.size - this->size)
+        if(this->times==threshold_appears_big_point&&this->position_arr[0].x>=point.position.x&&this->position_arr[0].x<=point.position.x + point.size
+                &&this->position_arr[0].y>=point.position.y&&this->position_arr[0].y<=point.position.y + point.size)
         {
             this->times=0;
             this->position_arr.push_back(point.position);
             point.position.x=(rand()%(SCREEN_WIDTH/10-1))*10;
             point.position.y=(rand()%(SCREEN_HEIGHT/10-1))*10;
-            point.size=10;
+            point.size=20;
         }
-        else if(this->position_arr[0].x==point.position.x&&this->position_arr[0].y==point.position.y)
+        else if(this->position_arr[0].x>=point.position.x&&this->position_arr[0].x<=point.position.x + point.size
+                &&this->position_arr[0].y>=point.position.y&&this->position_arr[0].y<=point.position.y + point.size)
         {
             this->times++;
             this->position_arr.push_back(point.position);
@@ -94,7 +142,7 @@ struct Snake
             point.position.y=(rand()%(SCREEN_HEIGHT/10))*10;
             if(this->times==threshold_appears_big_point)
             {
-                point.size=20;
+                point.size=30;
             }
         }
     }

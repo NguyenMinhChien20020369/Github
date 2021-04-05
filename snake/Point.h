@@ -10,7 +10,7 @@ using namespace std;
 
 struct Point
 {
-    int size=10;
+    int size=20;
     Position position;
 
     void render(SDL_Renderer* renderer)

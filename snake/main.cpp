@@ -10,8 +10,6 @@ using namespace std;
 int main(int argc,char* argv[])
 {
     srand(time(nullptr));
-    SDL_Window* window;
-    SDL_Renderer* renderer;
     initSDL(window,renderer);
     bool Exit=false,Can_move;
 
@@ -19,7 +17,6 @@ int main(int argc,char* argv[])
     snake.position_arr.push_back(snake.position);
     Point point;
 
-    SDL_Event e,befor;
     while(true)
     {
         for(int i=1; i<snake.position_arr.size(); i++)
@@ -69,27 +66,35 @@ int main(int argc,char* argv[])
                         break;
                     case SDLK_LEFT:
                         snake.turnLeft();
+                        head="snake_head_left.bmp";
                         break;
                     case SDLK_RIGHT:
                         snake.turnRight();
+                        head="snake_head_right.bmp";
                         break;
                     case SDLK_DOWN:
                         snake.turnDown();
+                        head="snake_head_bot.bmp";
                         break;
                     case SDLK_UP:
                         snake.turnUp();
+                        head="snake_head_top.bmp";
                         break;
                     case SDLK_a:
                         snake.turnLeft();
+                        head="snake_head_left.bmp";
                         break;
                     case SDLK_d:
                         snake.turnRight();
+                        head="snake_head_right.bmp";
                         break;
                     case SDLK_s:
                         snake.turnDown();
+                        head="snake_head_bot.bmp";
                         break;
                     case SDLK_w:
                         snake.turnUp();
+                        head="snake_head_top.bmp";
                         break;
                     default:
                         break;
