@@ -10,9 +10,9 @@ using namespace std;
 
 struct Position
 {
-    int size=10;
-    int x=(rand()%(SCREEN_WIDTH/10-size+1))*10;
-    int y=(rand()%(SCREEN_HEIGHT/10-size+1))*10;
+    int sizeP=10;
+    int x;
+    int y;
 };
 
 #endif // Position_h

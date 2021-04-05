@@ -13,8 +13,9 @@ int main(int argc,char* argv[])
     initSDL(window,renderer);
     bool Exit=false,Can_move;
 
-    Snake snake(0,0);
-    snake.position_arr.push_back(snake.position);
+    Snake snake;
+    snake.position_arr.push_back(snake.positionH);
+    snake.position_arr.push_back(snake.positionT);
     Point point;
 
     while(true)
@@ -54,6 +55,22 @@ int main(int argc,char* argv[])
                     Can_move=false;
                 }
                 if(befor.key.keysym.sym==SDLK_DOWN&&e.key.keysym.sym==SDLK_UP)
+                {
+                    Can_move=false;
+                }
+                if(befor.key.keysym.sym==SDLK_d&&e.key.keysym.sym==SDLK_a)
+                {
+                    Can_move=false;
+                }
+                if(befor.key.keysym.sym==SDLK_a&&e.key.keysym.sym==SDLK_d)
+                {
+                    Can_move=false;
+                }
+                if(befor.key.keysym.sym==SDLK_w&&e.key.keysym.sym==SDLK_s)
+                {
+                    Can_move=false;
+                }
+                if(befor.key.keysym.sym==SDLK_s&&e.key.keysym.sym==SDLK_w)
                 {
                     Can_move=false;
                 }

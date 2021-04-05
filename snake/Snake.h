@@ -11,19 +11,22 @@ using namespace std;
 
 struct Snake
 {
-    Position position;
-    int size=20;
-    int stepX=0;
+    Position positionH,positionT;
+    int sizeS=20;
+    int stepX=20;
     int stepY=0;
     int num=20;
     int times=0;
-    vector<Position> position_arr;
+    vector <Position> position_arr;
 
-    Snake(int _x,int _y)
+    Snake()
     {
-        this->position.x=_x;
-        this->position.y=_y;
+        this->positionH.x=20;
+        this->positionH.y=0;
+        this->positionT.x=0;
+        this->positionT.y=0;
     }
+
     void render(SDL_Renderer* renderer)
     {
         for(int i=0; i<position_arr.size(); i++)
@@ -79,24 +82,27 @@ struct Snake
             sourceRect.y=0;
             desRect.x=position_arr[i].x;
             desRect.y=position_arr[i].y;
-            desRect.w=size;
-            desRect.h=size;
+            desRect.w=sizeS;
+            desRect.h=sizeS;
             SDL_RenderCopy(renderer,texture,&sourceRect,&desRect);
         }
     }
 
     void move()
     {
-        for(int i=position_arr.size()-1; i>0; i--)
+        if(!(position_arr.size()==2&&position_arr[0].x==20&&position_arr[0].y==0&&position_arr[1].x==0&&position_arr[1].x==0))
         {
-            position_arr[i]=position_arr[i-1];
+            for(int i=position_arr.size()-1; i>0; i--)
+            {
+                position_arr[i]=position_arr[i-1];
+            }
         }
         position_arr[0].x+=stepX;
         position_arr[0].y+=stepY;
         if(position_arr[0].y>SCREEN_HEIGHT)position_arr[0].y=0;
-        if(position_arr[0].y<0)position_arr[0].y=SCREEN_HEIGHT-size;
+        if(position_arr[0].y<0)position_arr[0].y=SCREEN_HEIGHT-sizeS;
         if(position_arr[0].x>SCREEN_WIDTH)position_arr[0].x=0;
-        if(position_arr[0].x<0)position_arr[0].x=SCREEN_WIDTH-size;
+        if(position_arr[0].x<0)position_arr[0].x=SCREEN_WIDTH-sizeS;
     }
 
     void turnUp()
@@ -124,8 +130,8 @@ struct Snake
     }
     void eat(Point &point)
     {
-        if(this->times==threshold_appears_big_point&&this->position_arr[0].x>=point.position.x&&this->position_arr[0].x<=point.position.x + point.size
-                &&this->position_arr[0].y>=point.position.y&&this->position_arr[0].y<=point.position.y + point.size)
+        if(this->times==threshold_appears_big_point&&this->position_arr[0].x>=point.position.x-10&&this->position_arr[0].x<point.position.x + point.size
+                &&this->position_arr[0].y>=point.position.y-10&&this->position_arr[0].y<point.position.y + point.size)
         {
             this->times=0;
             this->position_arr.push_back(point.position);
@@ -133,8 +139,8 @@ struct Snake
             point.position.y=(rand()%(SCREEN_HEIGHT/10-1))*10;
             point.size=20;
         }
-        else if(this->position_arr[0].x>=point.position.x&&this->position_arr[0].x<=point.position.x + point.size
-                &&this->position_arr[0].y>=point.position.y&&this->position_arr[0].y<=point.position.y + point.size)
+        else if(this->position_arr[0].x>=point.position.x-10&&this->position_arr[0].x<point.position.x + point.size
+                &&this->position_arr[0].y>=point.position.y-10&&this->position_arr[0].y<point.position.y + point.size)
         {
             this->times++;
             this->position_arr.push_back(point.position);

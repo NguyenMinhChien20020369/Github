@@ -13,6 +13,12 @@ struct Point
     int size=20;
     Position position;
 
+    Point()
+    {
+        position.x=(rand()%(SCREEN_WIDTH/10-10+1))*10;
+        position.y=(rand()%(SCREEN_HEIGHT/10-10+1))*10;
+    }
+
     void render(SDL_Renderer* renderer)
     {
         SDL_Rect filled_rect;

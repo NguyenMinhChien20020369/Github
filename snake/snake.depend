@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1617621025 source:d:\chuan_muc\github\snake\main.cpp
+1617628321 source:d:\chuan_muc\github\snake\main.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	"SDL_setup.h"
@@ -24,19 +24,19 @@
 	<bits/stdc++.h>
 	<SDL.h>
 
-1616421839 d:\chuan_muc\github\snake\position.h
+1617626353 d:\chuan_muc\github\snake\position.h
 	<bits/stdc++.h>
 	<SDL.h>
 	"SDL_setup.h"
 	"Position.h"
 
-1616509549 d:\chuan_muc\github\snake\point.h
+1617626397 d:\chuan_muc\github\snake\point.h
 	<bits/stdc++.h>
 	<SDL.h>
 	"SDL_setup.h"
 	"Position.h"
 
-1617620959 d:\chuan_muc\github\snake\snake.h
+1617629376 d:\chuan_muc\github\snake\snake.h
 	<bits/stdc++.h>
 	<SDL.h>
 	"SDL_setup.h"
