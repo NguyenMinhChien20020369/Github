@@ -26,6 +26,7 @@ static Uint32 frameTime;
 static char* head="snake_head_right.bmp";
 static char* tail=NULL;
 static char* body=NULL;
+static bool again;
 
 void logSDLError(ostream& os, const string &msg, bool fatal);
 

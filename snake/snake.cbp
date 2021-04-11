@@ -31,10 +31,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Point.cpp" />
 		<Unit filename="Point.h" />
 		<Unit filename="Position.h" />
 		<Unit filename="SDL_setup.cpp" />
 		<Unit filename="SDL_setup.h" />
+		<Unit filename="Snake.cpp" />
 		<Unit filename="Snake.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>

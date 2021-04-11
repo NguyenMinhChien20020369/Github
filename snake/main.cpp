@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 #include <SDL.h>
 #include "SDL_setup.h"
-#include "Position.h"
-#include "Point.h"
 #include "Snake.h"
 
 using namespace std;
@@ -18,6 +16,23 @@ int main(int argc,char* argv[])
     snake.position_arr.push_back(snake.positionT);
     Point point;
 
+    do
+    {
+        again=false;
+        point.position.x=rand()%(SCREEN_WIDTH-point.size+1);
+        point.position.y=rand()%(SCREEN_HEIGHT-point.size+1);
+        for(int i=0; i<snake.position_arr.size(); i++)
+        {
+            if(point.position.x>snake.position_arr[i].x-point.size&&point.position.x<snake.position_arr[i].x+snake.sizeS
+                    &&point.position.y>snake.position_arr[i].y-point.size&&point.position.y<snake.position_arr[i].y+snake.sizeS)
+            {
+                again=true;
+                break;
+            }
+        }
+    }
+    while(again);
+
     while(true)
     {
         for(int i=1; i<snake.position_arr.size(); i++)
@@ -27,7 +42,7 @@ int main(int argc,char* argv[])
         if(Exit)break;
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderClear(renderer);
-        snake.render(renderer);
+        snake.render(renderer,head);
         point.render(renderer);
 
         SDL_RenderPresent(renderer);

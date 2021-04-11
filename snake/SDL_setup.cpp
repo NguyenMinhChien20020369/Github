@@ -4,7 +4,6 @@
 
 using namespace std;
 
-
 void logSDLError(ostream& os, const string &msg, bool fatal)
 {
     os<<msg<<" Error: "<<SDL_GetError()<<endl;

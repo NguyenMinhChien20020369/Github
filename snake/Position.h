@@ -3,8 +3,6 @@
 
 #include <bits/stdc++.h>
 #include <SDL.h>
-#include "SDL_setup.h"
-#include "Position.h"
 
 using namespace std;
 
