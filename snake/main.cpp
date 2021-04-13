@@ -33,6 +33,12 @@ int main(int argc,char* argv[])
     }
     while(again);
 
+    int ret_menu=menu(renderer);
+    if(ret_menu==1)
+    {
+        Exit=true;
+    }
+
     while(true)
     {
         for(int i=1; i<snake.position_arr.size(); i++)
@@ -50,8 +56,7 @@ int main(int argc,char* argv[])
 
         SDL_Delay(time_delay);
 
-        if(SDL_PollEvent(&e)==0) {}
-        else
+        if(SDL_PollEvent(&e)!=0)
         {
             if(e.type==SDL_QUIT) break;
             if(e.type==SDL_KEYDOWN)
@@ -138,7 +143,7 @@ int main(int argc,char* argv[])
         }
         snake.eat(point);
         snake.move();
-    };
+    }
     quitSDL(window,renderer);
     return 0;
 }

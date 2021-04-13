@@ -39,6 +39,8 @@
 		<Unit filename="Snake.cpp" />
 		<Unit filename="Snake.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="textHandle.cpp" />
+		<Unit filename="textHandle.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

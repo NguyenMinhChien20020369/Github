@@ -3,6 +3,8 @@
 
 #include <bits/stdc++.h>
 #include <SDL.h>
+#include <SDL_ttf.h>
+#include "textHandle.h"
 
 using namespace std;
 
@@ -16,6 +18,7 @@ static const int DELAY_TIME = 1000 / FPS;
 static SDL_Window* window=NULL;
 static SDL_Renderer* renderer=NULL;
 static SDL_Surface* tempSurface=NULL;
+static SDL_Surface* img_menu=NULL;
 static SDL_Texture* texture=NULL;
 static SDL_Event e,befor;
 static SDL_Rect sourceRect;
@@ -29,11 +32,10 @@ static char* body=NULL;
 static bool again;
 
 void logSDLError(ostream& os, const string &msg, bool fatal);
-
 void initSDL(SDL_Window* &window, SDL_Renderer* &renderer);
-
 void quitSDL(SDL_Window* window, SDL_Renderer* renderer);
-
 void waitUntilKeyPressed();
+int menu(SDL_Renderer* renderer);
+bool inRect(const int& x,const int& y,const SDL_Rect& rect);
 
 #endif // SDL_utils_h
