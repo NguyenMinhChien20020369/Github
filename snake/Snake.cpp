@@ -313,11 +313,12 @@ void Snake::turnRight()
     stepY=0;
 }
 
-void Snake::eat(Point &point)
+void Snake::eat(Point &point,long long& num_score,int& max_score)
 {
     if(this->times==threshold_appears_big_point&&this->position_arr[0].x>point.position.x-sizeS&&this->position_arr[0].x<point.position.x + point.size
             &&this->position_arr[0].y>point.position.y-sizeS&&this->position_arr[0].y<point.position.y + point.size)
     {
+        num_score+=max_score;
         this->times=0;
         this->position_arr.push_back(point.position);
         do
@@ -341,6 +342,7 @@ void Snake::eat(Point &point)
     else if(this->position_arr[0].x>point.position.x-sizeS&&this->position_arr[0].x<point.position.x + point.size
             &&this->position_arr[0].y>point.position.y-sizeS&&this->position_arr[0].y<point.position.y + point.size)
     {
+        num_score++;
         this->times++;
         this->position_arr.push_back(point.position);
         do

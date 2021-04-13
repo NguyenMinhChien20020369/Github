@@ -163,3 +163,13 @@ int menu(SDL_Renderer* renderer)
         SDL_RenderPresent(renderer);
     }
 }
+
+void printScore(SDL_Renderer* renderer,long long& num_score)
+{
+    string mes_score="Score: "+to_string(num_score);
+    textHandle score;
+    score.SetRect(SCREEN_WIDTH/2,0);
+    score.SetColor(textHandle::BLACK_TEXT);
+    score.SetText(mes_score);
+    score.CreateText(texture,renderer,sourceRect);
+}

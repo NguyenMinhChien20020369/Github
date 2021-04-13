@@ -22,7 +22,7 @@ struct Snake
     void turnDown();
     void turnLeft();
     void turnRight();
-    void eat(Point &point);
+    void eat(Point &point,long long& num_score,int& max_score);
 };
 
 #endif

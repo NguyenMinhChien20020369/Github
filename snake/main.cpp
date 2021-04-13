@@ -10,6 +10,7 @@ int main(int argc,char* argv[])
     srand(time(nullptr));
     initSDL(window,renderer);
     bool Exit=false,Can_move;
+    int max_score=5;
 
     Snake snake;
     snake.position_arr.push_back(snake.positionH);
@@ -41,6 +42,7 @@ int main(int argc,char* argv[])
 
     while(true)
     {
+        max_score--;
         for(int i=1; i<snake.position_arr.size(); i++)
         {
             if(snake.position_arr[0].x==snake.position_arr[i].x&&snake.position_arr[0].y==snake.position_arr[i].y)Exit=true;
@@ -50,6 +52,7 @@ int main(int argc,char* argv[])
         SDL_RenderClear(renderer);
         snake.render(renderer,head);
         point.render(renderer);
+        printScore(renderer,num_score);
 
         SDL_RenderPresent(renderer);
         //SDL_UpdateWindowSurface(window);
@@ -141,7 +144,7 @@ int main(int argc,char* argv[])
                 }
             }
         }
-        snake.eat(point);
+        snake.eat(point,num_score,max_score);
         snake.move();
     }
     quitSDL(window,renderer);

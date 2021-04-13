@@ -24,7 +24,6 @@ struct textHandle
     ~textHandle();
     SDL_Rect GetRect() const {return rect_;}
     void SetRect(const int& x, const int& y){rect_.x=x;rect_.y=y;}
-    void Show(SDL_Surface* des);
     void SetText(const string text){text_=text;}
     void SetColor(const int& type);
     void CreateText(SDL_Texture* texture,SDL_Renderer* renderer,SDL_Rect& sourceRect);
