@@ -8,9 +8,14 @@ using namespace std;
 int main(int argc,char* argv[])
 {
     srand(time(nullptr));
-    initSDL(window,renderer);
-    bool Exit=false,Can_move;
-    int max_score=5;
+    if(!initSDL(window,renderer))
+    {
+        return -1;
+    }
+    bool play=true,Can_move;
+    int max_score=500;
+    int time_big_point_appears;
+    int time_to_minus=1000;
 
     Snake snake;
     snake.position_arr.push_back(snake.positionH);
@@ -34,25 +39,38 @@ int main(int argc,char* argv[])
     }
     while(again);
 
-    int ret_menu=menu(renderer);
-    if(ret_menu==1)
+    int ret_menu_first=menu_first(renderer);
+    if(ret_menu_first==1)
     {
-        Exit=true;
+        play=false;
     }
 
-    while(true)
+    chunk=Mix_LoadWAV("changebrg.wav");
+    Mix_PlayChannel(-1,chunk,0);
+
+    befor.key.keysym.sym=SDLK_d;
+
+    while(play)
     {
-        max_score--;
         for(int i=1; i<snake.position_arr.size(); i++)
         {
-            if(snake.position_arr[0].x==snake.position_arr[i].x&&snake.position_arr[0].y==snake.position_arr[i].y)Exit=true;
+            if(snake.position_arr[0].x==snake.position_arr[i].x&&snake.position_arr[0].y==snake.position_arr[i].y)
+            {
+                chunk=Mix_LoadWAV("die.wav");
+                Mix_PlayChannel(-1,chunk,0);
+                SDL_Delay(2000);
+                open_menu_final(renderer,num_score,play,befor,head,snake,point);
+            }
         }
-        if(Exit)break;
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderClear(renderer);
         snake.render(renderer,head);
         point.render(renderer);
-        printScore(renderer,num_score);
+        printScore(renderer,num_score,"Score: ");
+        if(snake.times==threshold_appears_big_point)
+        {
+            printTime(renderer, time_to_minus);
+        }
 
         SDL_RenderPresent(renderer);
         //SDL_UpdateWindowSurface(window);
@@ -61,39 +79,23 @@ int main(int argc,char* argv[])
 
         if(SDL_PollEvent(&e)!=0)
         {
-            if(e.type==SDL_QUIT) break;
+            if(e.type==SDL_QUIT) play=false;
             if(e.type==SDL_KEYDOWN)
             {
                 Can_move=true;
-                if(befor.key.keysym.sym==SDLK_RIGHT&&e.key.keysym.sym==SDLK_LEFT)
+                if((befor.key.keysym.sym==SDLK_d||befor.key.keysym.sym==SDLK_RIGHT)&&(e.key.keysym.sym==SDLK_LEFT||e.key.keysym.sym==SDLK_a))
                 {
                     Can_move=false;
                 }
-                if(befor.key.keysym.sym==SDLK_LEFT&&e.key.keysym.sym==SDLK_RIGHT)
+                if((befor.key.keysym.sym==SDLK_a||befor.key.keysym.sym==SDLK_LEFT)&&(e.key.keysym.sym==SDLK_RIGHT||e.key.keysym.sym==SDLK_d))
                 {
                     Can_move=false;
                 }
-                if(befor.key.keysym.sym==SDLK_UP&&e.key.keysym.sym==SDLK_DOWN)
+                if((befor.key.keysym.sym==SDLK_w||befor.key.keysym.sym==SDLK_UP)&&(e.key.keysym.sym==SDLK_DOWN||e.key.keysym.sym==SDLK_s))
                 {
                     Can_move=false;
                 }
-                if(befor.key.keysym.sym==SDLK_DOWN&&e.key.keysym.sym==SDLK_UP)
-                {
-                    Can_move=false;
-                }
-                if(befor.key.keysym.sym==SDLK_d&&e.key.keysym.sym==SDLK_a)
-                {
-                    Can_move=false;
-                }
-                if(befor.key.keysym.sym==SDLK_a&&e.key.keysym.sym==SDLK_d)
-                {
-                    Can_move=false;
-                }
-                if(befor.key.keysym.sym==SDLK_w&&e.key.keysym.sym==SDLK_s)
-                {
-                    Can_move=false;
-                }
-                if(befor.key.keysym.sym==SDLK_s&&e.key.keysym.sym==SDLK_w)
+                if((befor.key.keysym.sym==SDLK_s||befor.key.keysym.sym==SDLK_DOWN)&&(e.key.keysym.sym==SDLK_UP||e.key.keysym.sym==SDLK_w))
                 {
                     Can_move=false;
                 }
@@ -102,7 +104,7 @@ int main(int argc,char* argv[])
                     switch (e.key.keysym.sym)
                     {
                     case SDLK_ESCAPE:
-                        Exit=true;
+                        play=false;
                         break;
                     case SDLK_LEFT:
                         snake.turnLeft();
@@ -139,12 +141,11 @@ int main(int argc,char* argv[])
                     default:
                         break;
                     }
-                    if(Exit)break;
                     befor.key.keysym.sym=e.key.keysym.sym;
                 }
             }
         }
-        snake.eat(point,num_score,max_score);
+        snake.eat(point,num_score,max_score,time_big_point_appears,time_to_minus);
         snake.move();
     }
     quitSDL(window,renderer);

@@ -8,9 +8,9 @@ struct Snake
 {
     Position positionH,positionT;
     int sizeS=20;
-    int stepX=20;
-    int stepY=0;
     int num=20;
+    int stepX=0;
+    int stepY=0;
     int times=0;
     vector <Position> position_arr;
 
@@ -22,7 +22,7 @@ struct Snake
     void turnDown();
     void turnLeft();
     void turnRight();
-    void eat(Point &point,long long& num_score,int& max_score);
+    void eat(Point &point,long long& num_score,int& max_score,int& time_big_point_appears,int& time_to_minus);
 };
 
 #endif

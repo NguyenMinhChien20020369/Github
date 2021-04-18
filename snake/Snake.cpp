@@ -7,7 +7,7 @@ using namespace std;
 
 Snake::Snake()
 {
-    this->positionH.x=20;
+    this->positionH.x=num;
     this->positionH.y=0;
     this->positionT.x=0;
     this->positionT.y=0;
@@ -274,7 +274,7 @@ void Snake::render(SDL_Renderer* renderer,char* head)
 
 void Snake::move()
 {
-    if(!(position_arr.size()==2&&position_arr[0].x==20&&position_arr[0].y==0&&position_arr[1].x==0&&position_arr[1].x==0))
+    if(!(stepX==0&&stepY==0))
     {
         for(int i=position_arr.size()-1; i>0; i--)
         {
@@ -313,11 +313,41 @@ void Snake::turnRight()
     stepY=0;
 }
 
-void Snake::eat(Point &point,long long& num_score,int& max_score)
+void Snake::eat(Point &point,long long& num_score,int& max_score,int& time_big_point_appears,int& time_to_minus)
 {
+    if(time_to_minus==5000)
+    {
+        this->times=0;
+        do
+        {
+            again=false;
+            point.position.x=rand()%(SCREEN_WIDTH-point.size+1);
+            point.position.y=rand()%(SCREEN_HEIGHT-point.size+1);
+            for(int i=0; i<position_arr.size(); i++)
+            {
+                if(point.position.x>position_arr[i].x-point.size&&point.position.x<position_arr[i].x+sizeS
+                        &&point.position.y>position_arr[i].y-point.size&&point.position.y<position_arr[i].y+sizeS)
+                {
+                    again=true;
+                    break;
+                }
+            }
+        }
+        while(again);
+        point.size=20;
+        time_to_minus=1000;
+        max_score=500;
+    }
+    if(times==threshold_appears_big_point&&SDL_GetTicks()-time_big_point_appears>time_to_minus)
+    {
+        time_to_minus+=1000;
+        max_score-=(500-100)/4;
+    }
     if(this->times==threshold_appears_big_point&&this->position_arr[0].x>point.position.x-sizeS&&this->position_arr[0].x<point.position.x + point.size
             &&this->position_arr[0].y>point.position.y-sizeS&&this->position_arr[0].y<point.position.y + point.size)
     {
+        chunk=Mix_LoadWAV("eat_big_point.wav");
+        Mix_PlayChannel(-1,chunk,0);
         num_score+=max_score;
         this->times=0;
         this->position_arr.push_back(point.position);
@@ -338,11 +368,13 @@ void Snake::eat(Point &point,long long& num_score,int& max_score)
         }
         while(again);
         point.size=20;
+        time_to_minus=1000;
+        max_score=500;
     }
     else if(this->position_arr[0].x>point.position.x-sizeS&&this->position_arr[0].x<point.position.x + point.size
             &&this->position_arr[0].y>point.position.y-sizeS&&this->position_arr[0].y<point.position.y + point.size)
     {
-        num_score++;
+        num_score+=8;
         this->times++;
         this->position_arr.push_back(point.position);
         do
@@ -364,21 +396,16 @@ void Snake::eat(Point &point,long long& num_score,int& max_score)
         if(this->times==threshold_appears_big_point)
         {
             point.size=30;
+            time_big_point_appears=SDL_GetTicks();
+            //ting
+            chunk=Mix_LoadWAV("eat_and_appears.wav");
+            Mix_PlayChannel(-1,chunk,0);
+        }
+        else
+        {
+            //xoet
+            chunk=Mix_LoadWAV("eat_small_point.wav");
+            Mix_PlayChannel(-1,chunk,0);
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1618332573 source:d:\chuan_muc\github\snake\main.cpp
+1618728922 source:d:\chuan_muc\github\snake\main.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	"SDL_setup.h"
@@ -13,16 +13,19 @@
 	<bits/stdc++.h>
 	<SDL.h>
 
-1618331777 source:d:\chuan_muc\github\snake\sdl_setup.cpp
+1618726038 source:d:\chuan_muc\github\snake\sdl_setup.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	"SDL_setup.h"
 
-1618332819 d:\chuan_muc\github\snake\sdl_setup.h
+1618729881 d:\chuan_muc\github\snake\sdl_setup.h
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_ttf.h>
+	<SDL_mixer.h>
 	"textHandle.h"
+	"Snake.h"
+	"Point.h"
 
 1618243922 d:\chuan_muc\github\snake\position.h
 	<bits/stdc++.h>
@@ -31,7 +34,7 @@
 1618138334 d:\chuan_muc\github\snake\point.h
 	"Position.h"
 
-1618332552 d:\chuan_muc\github\snake\snake.h
+1618727324 d:\chuan_muc\github\snake\snake.h
 	"Position.h"
 	"Point.h"
 
@@ -49,7 +52,7 @@
 	"Point.h"
 	"SDL_setup.h"
 
-1618332552 source:d:\chuan_muc\github\snake\snake.cpp
+1618727479 source:d:\chuan_muc\github\snake\snake.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	"Snake.h"
