@@ -1,9 +1,7 @@
 #ifndef SDL_setup_h
 #define SDL_setup_h
 
-#include <bits/stdc++.h>
 #include <SDL.h>
-#include <SDL_ttf.h>
 #include <SDL_mixer.h>
 #include "textHandle.h"
 #include "Snake.h"

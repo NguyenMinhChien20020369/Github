@@ -105,7 +105,7 @@ int main(int argc,char* argv[])
         }
         if(!play) break;
         snake.render(renderer,head,tempSurface, Image);
-        point.render(renderer,tempSurface, Image);
+        point.render(renderer, Image);
         printScore(renderer,num_score,"Score: ");
         if(snake.times==threshold_appears_big_point)
         {

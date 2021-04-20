@@ -4,9 +4,11 @@
 #include "Position.h"
 #include "Point.h"
 
+using namespace std;
+
 struct Snake
 {
-    Position positionH,positionT;
+    Position positionH, positionT;
     int sizeS=20;
     int num=20;
     int stepX=0;

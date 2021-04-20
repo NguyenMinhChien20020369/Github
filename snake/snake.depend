@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1618767961 source:d:\chuan_muc\github\snake\main.cpp
+1618918927 source:d:\chuan_muc\github\snake\main.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	"SDL_setup.h"
@@ -13,28 +13,25 @@
 	<bits/stdc++.h>
 	<SDL.h>
 
-1618769191 source:d:\chuan_muc\github\snake\sdl_setup.cpp
+1618917160 source:d:\chuan_muc\github\snake\sdl_setup.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	"SDL_setup.h"
 
-1618769179 d:\chuan_muc\github\snake\sdl_setup.h
-	<bits/stdc++.h>
+1618917527 d:\chuan_muc\github\snake\sdl_setup.h
 	<SDL.h>
-	<SDL_ttf.h>
 	<SDL_mixer.h>
 	"textHandle.h"
 	"Snake.h"
 	"Point.h"
 
-1618243922 d:\chuan_muc\github\snake\position.h
-	<bits/stdc++.h>
+1618918168 d:\chuan_muc\github\snake\position.h
+
+1618918918 d:\chuan_muc\github\snake\point.h
+	"Position.h"
 	<SDL.h>
 
-1618768359 d:\chuan_muc\github\snake\point.h
-	"Position.h"
-
-1618769113 d:\chuan_muc\github\snake\snake.h
+1618918109 d:\chuan_muc\github\snake\snake.h
 	"Position.h"
 	"Point.h"
 
@@ -46,9 +43,7 @@
 
 1617101648 d:\chuan_muc\github\snake\loadtexture.h
 
-1618768674 source:d:\chuan_muc\github\snake\point.cpp
-	<bits/stdc++.h>
-	<SDL.h>
+1618918918 source:d:\chuan_muc\github\snake\point.cpp
 	"Point.h"
 	"SDL_setup.h"
 
@@ -66,11 +61,12 @@
 1618328866 source:d:\chuan_muc\github\snake\textobject.cpp
 	"textObject.h"
 
-1618753252 d:\chuan_muc\github\snake\texthandle.h
+1618917267 d:\chuan_muc\github\snake\texthandle.h
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_ttf.h>
+	"SDL_setup.h"
 
-1618732944 source:d:\chuan_muc\github\snake\texthandle.cpp
+1618917237 source:d:\chuan_muc\github\snake\texthandle.cpp
 	"textHandle.h"
 

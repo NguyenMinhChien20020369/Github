@@ -4,6 +4,7 @@
 #include <bits/stdc++.h>
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include "SDL_setup.h"
 
 using namespace std;
 
@@ -17,17 +18,15 @@ struct textHandle
     enum TextColor
     {
         RED_TEXT =0 ,
-        WHITE_TEXT =1,
-        BLACK_TEXT =2,
+        BLACK_TEXT =1,
     };
 
     textHandle();
     ~textHandle();
-    SDL_Rect GetRect() const {return rect_;}
-    void SetRect(const int& x, const int& y){rect_.x=x;rect_.y=y;}
-    void SetText(const string text){text_=text;}
+    void SetRect(const int& x, const int& y);
+    void SetText(const string text);
     void SetColor(const int& type);
-    void CreateText(SDL_Texture* texture,SDL_Renderer* renderer,SDL_Rect& sourceRect);
+    void CreateText(SDL_Renderer* renderer);
 };
 
 #endif // TEXT_HANDLE_H_

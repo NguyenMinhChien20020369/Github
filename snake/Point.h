@@ -2,6 +2,7 @@
 #define Point_h
 
 #include "Position.h"
+#include <SDL.h>
 
 struct Point
 {
@@ -10,7 +11,7 @@ struct Point
 
     Point();
 
-    void render(SDL_Renderer* renderer,SDL_Surface* tempSurface, SDL_Texture** Image);
+    void render(SDL_Renderer* renderer, SDL_Texture** Image) const;
 };
 
 #endif // Point_h

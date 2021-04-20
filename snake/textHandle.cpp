@@ -1,7 +1,5 @@
 #include "textHandle.h"
 
-using namespace std;
-
 textHandle::textHandle()
 {
     rect_.x=0;
@@ -14,26 +12,30 @@ textHandle::~textHandle()
     ;
 }
 
+void textHandle::SetRect(const int& x, const int& y)
+{
+    rect_.x=x;
+    rect_.y=y;
+}
+
+void textHandle::SetText(const string text)
+{
+    text_=text;
+}
+
 void textHandle::SetColor(const int& type)
 {
     if(type==RED_TEXT)
     {
-        SDL_Color color = {255,0,0};
-        text_color_=color;
-    }
-    else if (type==WHITE_TEXT)
-    {
-        SDL_Color color = {255,255,0};
-        text_color_=color;
+        text_color_= {255,0,0};
     }
     else
     {
-        SDL_Color color = {0,0,0};
-        text_color_=color;
+        text_color_= {0,0,0};
     }
 }
 
-void textHandle::CreateText(SDL_Texture* texture,SDL_Renderer* renderer,SDL_Rect& sourceRect)
+void textHandle::CreateText(SDL_Renderer* renderer)
 {
     TTF_Font* font=TTF_OpenFont("Neverwinter.ttf",40);
     textSurface=TTF_RenderText_Solid(font,text_.c_str(),text_color_);

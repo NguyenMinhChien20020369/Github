@@ -120,7 +120,7 @@ int menu_first(SDL_Renderer* renderer)
         SDL_RenderCopy(renderer,texture,&sourceRect,&desRect);
         for(int i=0; i<boxnum_of_menu_first; i++)
         {
-            text_menu[i].CreateText(texture,renderer,sourceRect);
+            text_menu[i].CreateText(renderer);
         }
         if(SDL_PollEvent(&m_event)!=0)
         {
@@ -134,7 +134,7 @@ int menu_first(SDL_Renderer* renderer)
                 ym=m_event.motion.y;
                 for(int i=0; i<boxnum_of_menu_first; i++)
                 {
-                    if(inRect(xm,ym,text_menu[i].GetRect()))
+                    if(inRect(xm,ym,text_menu[i].rect_))
                     {
                         if(selected[i]==false)
                         {
@@ -161,7 +161,7 @@ int menu_first(SDL_Renderer* renderer)
                 ym=m_event.button.y;
                 for(int i=0; i<boxnum_of_menu_first; i++)
                 {
-                    if(inRect(xm,ym,text_menu[i].GetRect()))
+                    if(inRect(xm,ym,text_menu[i].rect_))
                     {
                         return i;
                     }
@@ -211,7 +211,7 @@ void menu_type(SDL_Renderer* renderer, bool& again, int& ret_menu_type, SDL_Text
         SDL_RenderCopy(renderer,texture,&sourceRect,&desRect);
         for(int i=0; i<boxnum_of_menu_type; i++)
         {
-            text_menu[i].CreateText(texture,renderer,sourceRect);
+            text_menu[i].CreateText(renderer);
         }
         if(SDL_PollEvent(&m_event)!=0)
         {
@@ -225,7 +225,7 @@ void menu_type(SDL_Renderer* renderer, bool& again, int& ret_menu_type, SDL_Text
                 ym=m_event.motion.y;
                 for(int i=0; i<boxnum_of_menu_type; i++)
                 {
-                    if(inRect(xm,ym,text_menu[i].GetRect()))
+                    if(inRect(xm,ym,text_menu[i].rect_))
                     {
                         if(selected[i]==false)
                         {
@@ -252,7 +252,7 @@ void menu_type(SDL_Renderer* renderer, bool& again, int& ret_menu_type, SDL_Text
                 ym=m_event.button.y;
                 for(int i=0; i<boxnum_of_menu_type; i++)
                 {
-                    if(inRect(xm,ym,text_menu[i].GetRect()))
+                    if(inRect(xm,ym,text_menu[i].rect_))
                     {
                         ret_menu_type=i;
                         if(i==boxnum_of_menu_type-1)
@@ -315,7 +315,7 @@ int menu_final(SDL_Renderer* renderer,long long& num_score)
         printScore(renderer,num_score,"Your score: ");
         for(int i=0; i<boxnum_of_menu_final; i++)
         {
-            text_menu[i].CreateText(texture,renderer,sourceRect);
+            text_menu[i].CreateText(renderer);
         }
         if(SDL_PollEvent(&m_event)!=0)
         {
@@ -329,7 +329,7 @@ int menu_final(SDL_Renderer* renderer,long long& num_score)
                 ym=m_event.motion.y;
                 for(int i=0; i<boxnum_of_menu_final; i++)
                 {
-                    if(inRect(xm,ym,text_menu[i].GetRect()))
+                    if(inRect(xm,ym,text_menu[i].rect_))
                     {
                         if(selected[i]==false)
                         {
@@ -356,7 +356,7 @@ int menu_final(SDL_Renderer* renderer,long long& num_score)
                 ym=m_event.button.y;
                 for(int i=0; i<boxnum_of_menu_final; i++)
                 {
-                    if(inRect(xm,ym,text_menu[i].GetRect()))
+                    if(inRect(xm,ym,text_menu[i].rect_))
                     {
                         return i;
                     }
@@ -433,7 +433,7 @@ void printScore(SDL_Renderer* renderer,long long& num_score,string _mes_score)
     score.SetRect(SCREEN_WIDTH/2,0);
     score.SetColor(textHandle::BLACK_TEXT);
     score.SetText(mes_score);
-    score.CreateText(texture,renderer,sourceRect);
+    score.CreateText(renderer);
 }
 
 void printTime(SDL_Renderer* renderer,int& time_to_minus)
@@ -443,7 +443,7 @@ void printTime(SDL_Renderer* renderer,int& time_to_minus)
     time.SetRect(0,0);
     time.SetColor(textHandle::BLACK_TEXT);
     time.SetText(mes_time);
-    time.CreateText(texture,renderer,sourceRect);
+    time.CreateText(renderer);
 }
 
 void printWall(SDL_Renderer* renderer, Snake& snake, SDL_Rect& box, bool& play, Point& point, SDL_Texture** Image, int& ret_menu_type, int& head, SDL_Event& befor, int& wallSize, long long& num_score, int& time_to_minus, int& max_score)
