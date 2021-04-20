@@ -5,10 +5,12 @@
 
 struct Point
 {
-    int size=20;
+    int size;
     Position position;
 
-    void render(SDL_Renderer* renderer);
+    Point();
+
+    void render(SDL_Renderer* renderer,SDL_Surface* tempSurface, SDL_Texture** Image);
 };
 
 #endif // Point_h

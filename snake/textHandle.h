@@ -20,6 +20,7 @@ struct textHandle
         WHITE_TEXT =1,
         BLACK_TEXT =2,
     };
+
     textHandle();
     ~textHandle();
     SDL_Rect GetRect() const {return rect_;}

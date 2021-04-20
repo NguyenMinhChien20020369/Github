@@ -8,18 +8,18 @@ using namespace std;
 Snake::Snake()
 {
     this->positionH.x=num;
-    this->positionH.y=0;
+    this->positionH.y=46;
     this->positionT.x=0;
-    this->positionT.y=0;
+    this->positionT.y=46;
 }
 
-void Snake::render(SDL_Renderer* renderer,char* head)
+void Snake::render(SDL_Renderer* renderer,int& head,SDL_Surface* tempSurface, SDL_Texture** Image)
 {
     for(int i=0; i<position_arr.size(); i++)
     {
         if(i==0)
         {
-            tempSurface=SDL_LoadBMP(head);
+            texture=Image[head];
         }
         else if(i==position_arr.size()-1)
         {
@@ -27,41 +27,41 @@ void Snake::render(SDL_Renderer* renderer,char* head)
             //2
             if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y+sizeS==position_arr[i].y)
             {
-                tail="snake_tail_bot.bmp";
+                tail=SNAKE_TAIL_BOT;
             }
             else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y<position_arr[i].y)
             {
-                tail="snake_tail_top.bmp";
+                tail=SNAKE_TAIL_TOP;
             }
             //12
             else if(position_arr[i-1].x+sizeS==position_arr[i].x&&position_arr[i-1].y==position_arr[i].y)
             {
-                tail="snake_tail_right.bmp";
+                tail=SNAKE_TAIL_RIGHT;
             }
             else if(position_arr[i-1].x<position_arr[i].x&&position_arr[i-1].y==position_arr[i].y)
             {
-                tail="snake_tail_left.bmp";
+                tail=SNAKE_TAIL_LEFT;
             }
             //2
             //1
             else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y==position_arr[i].y+sizeS)
             {
-                tail="snake_tail_top.bmp";
+                tail=SNAKE_TAIL_TOP;
             }
             else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y>position_arr[i].y)
             {
-                tail="snake_tail_bot.bmp";
+                tail=SNAKE_TAIL_BOT;
             }
             //21
             else if(position_arr[i-1].x==position_arr[i].x+sizeS&&position_arr[i-1].y==position_arr[i].y)
             {
-                tail="snake_tail_left.bmp";
+                tail=SNAKE_TAIL_LEFT;
             }
             else if(position_arr[i-1].x>position_arr[i].x&&position_arr[i-1].y==position_arr[i].y)
             {
-                tail="snake_tail_right.bmp";
+                tail=SNAKE_TAIL_RIGHT;
             }
-            tempSurface=SDL_LoadBMP(tail);
+            texture=Image[tail];
         }
         else
         {
@@ -70,197 +70,195 @@ void Snake::render(SDL_Renderer* renderer,char* head)
             if(position_arr[i-1].x==position_arr[i].x+sizeS&&position_arr[i-1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i+1].x&&position_arr[i].y==position_arr[i+1].y+sizeS)
             {
-                body="snake_curved_tr.bmp";
+                body=SNAKE_CURVED_TR;
             }
             else if(position_arr[i-1].x==position_arr[i].x+sizeS&&position_arr[i-1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i+1].x&&position_arr[i].y>position_arr[i+1].y)
             {
-                body="snake_curved_rb.bmp";
+                body=SNAKE_CURVED_RB;
             }
             else if(position_arr[i-1].x>position_arr[i].x&&position_arr[i-1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i+1].x&&position_arr[i].y==position_arr[i+1].y+sizeS)
             {
-                body="snake_curved_lt.bmp";
+                body=SNAKE_CURVED_LT;
             }
             else if(position_arr[i-1].x>position_arr[i].x&&position_arr[i-1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i+1].x&&position_arr[i].y>position_arr[i+1].y)
             {
-                body="snake_curved_bl.bmp";
+                body=SNAKE_CURVED_BL;
             }
             //1
             //23
             else if(position_arr[i+1].x==position_arr[i].x+sizeS&&position_arr[i+1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i-1].x&&position_arr[i].y==position_arr[i-1].y+sizeS)
             {
-                body="snake_curved_tr.bmp";
+                body=SNAKE_CURVED_TR;
             }
             else if(position_arr[i+1].x==position_arr[i].x+sizeS&&position_arr[i+1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i-1].x&&position_arr[i].y>position_arr[i-1].y)
             {
-                body="snake_curved_rb.bmp";
+                body=SNAKE_CURVED_RB;
             }
             else if(position_arr[i+1].x>position_arr[i].x&&position_arr[i+1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i-1].x&&position_arr[i].y==position_arr[i-1].y+sizeS)
             {
-                body="snake_curved_lt.bmp";
+                body=SNAKE_CURVED_LT;
             }
             else if(position_arr[i+1].x>position_arr[i].x&&position_arr[i+1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i-1].x&&position_arr[i].y>position_arr[i-1].y)
             {
-                body="snake_curved_bl.bmp";
+                body=SNAKE_CURVED_BL;
             }
             //21
             //3
             else if(position_arr[i+1].x==position_arr[i].x&&position_arr[i+1].y==position_arr[i].y+sizeS&&
                     position_arr[i].x+sizeS==position_arr[i-1].x&&position_arr[i].y==position_arr[i-1].y)
             {
-                body="snake_curved_rb.bmp";
+                body=SNAKE_CURVED_RB;
             }
             else if(position_arr[i+1].x==position_arr[i].x&&position_arr[i+1].y>position_arr[i].y&&
                     position_arr[i].x+sizeS==position_arr[i-1].x&&position_arr[i].y==position_arr[i-1].y)
             {
-                body="snake_curved_tr.bmp";
+                body=SNAKE_CURVED_TR;
             }
             else if(position_arr[i+1].x==position_arr[i].x&&position_arr[i+1].y==position_arr[i].y+sizeS&&
                     position_arr[i].x<position_arr[i-1].x&&position_arr[i].y==position_arr[i-1].y)
             {
-                body="snake_curved_bl.bmp";
+                body=SNAKE_CURVED_BL;
             }
             else if(position_arr[i+1].x==position_arr[i].x&&position_arr[i+1].y>position_arr[i].y&&
                     position_arr[i].x<position_arr[i-1].x&&position_arr[i].y==position_arr[i-1].y)
             {
-                body="snake_curved_lt.bmp";
+                body=SNAKE_CURVED_LT;
             }
             //23
             //1
             else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y==position_arr[i].y+sizeS&&
                     position_arr[i].x+sizeS==position_arr[i+1].x&&position_arr[i].y==position_arr[i+1].y)
             {
-                body="snake_curved_rb.bmp";
+                body=SNAKE_CURVED_RB;
             }
             else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y==position_arr[i].y+sizeS&&
                     position_arr[i].x<position_arr[i+1].x&&position_arr[i].y==position_arr[i+1].y)
             {
-                body="snake_curved_bl.bmp";
+                body=SNAKE_CURVED_BL;
             }
             else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y>position_arr[i].y&&
                     position_arr[i].x+sizeS==position_arr[i+1].x&&position_arr[i].y==position_arr[i+1].y)
             {
-                body="snake_curved_tr.bmp";
+                body=SNAKE_CURVED_TR;
             }
             else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y>position_arr[i].y&&
                     position_arr[i].x<position_arr[i+1].x&&position_arr[i].y==position_arr[i+1].y)
             {
-                body="snake_curved_lt.bmp";
+                body=SNAKE_CURVED_LT;
             }
             //32
             // 1
             else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y==position_arr[i].y+sizeS&&
                     position_arr[i].x==position_arr[i+1].x+sizeS&&position_arr[i].y==position_arr[i+1].y)
             {
-                body="snake_curved_bl.bmp";
+                body=SNAKE_CURVED_BL;
             }
             else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y==position_arr[i].y+sizeS&&
                     position_arr[i].x>position_arr[i+1].x&&position_arr[i].y==position_arr[i+1].y)
             {
-                body="snake_curved_rb.bmp";
+                body=SNAKE_CURVED_RB;
             }
             else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y>position_arr[i].y&&
                     position_arr[i].x==position_arr[i+1].x+sizeS&&position_arr[i].y==position_arr[i+1].y)
             {
-                body="snake_curved_lt.bmp";
+                body=SNAKE_CURVED_LT;
             }
             else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y>position_arr[i].y&&
                     position_arr[i].x>position_arr[i+1].x&&position_arr[i].y==position_arr[i+1].y)
             {
-                body="snake_curved_tr.bmp";
+                body=SNAKE_CURVED_TR;
             }
             //12
             // 3
             else if(position_arr[i+1].x==position_arr[i].x&&position_arr[i+1].y==position_arr[i].y+sizeS&&
                     position_arr[i].x==position_arr[i-1].x+sizeS&&position_arr[i].y==position_arr[i-1].y)
             {
-                body="snake_curved_bl.bmp";
+                body=SNAKE_CURVED_BL;
             }
             else if(position_arr[i+1].x==position_arr[i].x&&position_arr[i+1].y>position_arr[i].y&&
                     position_arr[i].x==position_arr[i-1].x+sizeS&&position_arr[i].y==position_arr[i-1].y)
             {
-                body="snake_curved_lt.bmp";
+                body=SNAKE_CURVED_LT;
             }
             else if(position_arr[i+1].x==position_arr[i].x&&position_arr[i+1].y==position_arr[i].y+sizeS&&
                     position_arr[i].x>position_arr[i-1].x&&position_arr[i].y==position_arr[i-1].y)
             {
-                body="snake_curved_rb.bmp";
+                body=SNAKE_CURVED_RB;
             }
             else if(position_arr[i+1].x==position_arr[i].x&&position_arr[i+1].y>position_arr[i].y&&
                     position_arr[i].x>position_arr[i-1].x&&position_arr[i].y==position_arr[i-1].y)
             {
-                body="snake_curved_tr.bmp";
+                body=SNAKE_CURVED_TR;
             }
             // 3
             //12
             else if(position_arr[i-1].x+sizeS==position_arr[i].x&&position_arr[i-1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i+1].x&&position_arr[i].y==position_arr[i+1].y+sizeS)
             {
-                body="snake_curved_lt.bmp";
+                body=SNAKE_CURVED_LT;
             }
             else if(position_arr[i-1].x+sizeS==position_arr[i].x&&position_arr[i-1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i+1].x&&position_arr[i].y>position_arr[i+1].y)
             {
-                body="snake_curved_bl.bmp";
+                body=SNAKE_CURVED_BL;
             }
             else if(position_arr[i-1].x<position_arr[i].x&&position_arr[i-1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i+1].x&&position_arr[i].y==position_arr[i+1].y+sizeS)
             {
-                body="snake_curved_tr.bmp";
+                body=SNAKE_CURVED_TR;
             }
             else if(position_arr[i-1].x<position_arr[i].x&&position_arr[i-1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i+1].x&&position_arr[i].y>position_arr[i+1].y)
             {
-                body="snake_curved_rb.bmp";
+                body=SNAKE_CURVED_RB;
             }
             // 1
             //32
             else if(position_arr[i+1].x+sizeS==position_arr[i].x&&position_arr[i+1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i-1].x&&position_arr[i].y==position_arr[i-1].y+sizeS)
             {
-                body="snake_curved_lt.bmp";
+                body=SNAKE_CURVED_LT;
             }
             else if(position_arr[i+1].x<position_arr[i].x&&position_arr[i+1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i-1].x&&position_arr[i].y==position_arr[i-1].y+sizeS)
             {
-                body="snake_curved_tr.bmp";
+                body=SNAKE_CURVED_TR;
             }
             else if(position_arr[i+1].x+sizeS==position_arr[i].x&&position_arr[i+1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i-1].x&&position_arr[i].y>position_arr[i-1].y)
             {
-                body="snake_curved_bl.bmp";
+                body=SNAKE_CURVED_BL;
             }
             else if(position_arr[i+1].x<position_arr[i].x&&position_arr[i+1].y==position_arr[i].y&&
                     position_arr[i].x==position_arr[i-1].x&&position_arr[i].y>position_arr[i-1].y)
             {
-                body="snake_curved_rb.bmp";
+                body=SNAKE_CURVED_RB;
             }
             else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y<position_arr[i].y)
             {
-                body="snake_body_vertical.bmp";
+                body=SNAKE_BODY_VERTICAL;
             }
             else if(position_arr[i-1].x<position_arr[i].x&&position_arr[i-1].y==position_arr[i].y)
             {
-                body="snake_body_horizontal.bmp";
+                body=SNAKE_BODY_HORIZONTAL;
             }
             else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y>position_arr[i].y)
             {
-                body="snake_body_vertical.bmp";
+                body=SNAKE_BODY_VERTICAL;
             }
             else if(position_arr[i-1].x>position_arr[i].x&&position_arr[i-1].y==position_arr[i].y)
             {
-                body="snake_body_horizontal.bmp";
+                body=SNAKE_BODY_HORIZONTAL;
             }
-            tempSurface=SDL_LoadBMP(body);
+            texture=Image[body];
         }
-        texture=SDL_CreateTextureFromSurface(renderer, tempSurface);
-        SDL_FreeSurface(tempSurface);
         SDL_QueryTexture(texture, NULL, NULL, &sourceRect.w,&sourceRect.h);
         sourceRect.x=0;
         sourceRect.y=0;
@@ -283,8 +281,8 @@ void Snake::move()
     }
     position_arr[0].x+=stepX;
     position_arr[0].y+=stepY;
-    if(position_arr[0].y>=SCREEN_HEIGHT)position_arr[0].y=0;
-    if(position_arr[0].y<0)position_arr[0].y=SCREEN_HEIGHT-sizeS;
+    if(position_arr[0].y>=SCREEN_HEIGHT)position_arr[0].y=46;
+    if(position_arr[0].y<46)position_arr[0].y=SCREEN_HEIGHT-sizeS;
     if(position_arr[0].x>=SCREEN_WIDTH)position_arr[0].x=0;
     if(position_arr[0].x<0)position_arr[0].x=SCREEN_WIDTH-sizeS;
 }
@@ -313,7 +311,7 @@ void Snake::turnRight()
     stepY=0;
 }
 
-void Snake::eat(Point &point,long long& num_score,int& max_score,int& time_big_point_appears,int& time_to_minus)
+void Snake::eat(Point &point,long long& num_score,int& max_score,int& time_big_point_appears,int& time_to_minus, int& wallSize)
 {
     if(time_to_minus==5000)
     {
@@ -321,8 +319,8 @@ void Snake::eat(Point &point,long long& num_score,int& max_score,int& time_big_p
         do
         {
             again=false;
-            point.position.x=rand()%(SCREEN_WIDTH-point.size+1);
-            point.position.y=rand()%(SCREEN_HEIGHT-point.size+1);
+            point.position.x=wallSize+rand()%(SCREEN_WIDTH-point.size-2*wallSize+1);
+            point.position.y=wallSize+46+(rand()%(SCREEN_HEIGHT-point.size-46-2*wallSize+1));
             for(int i=0; i<position_arr.size(); i++)
             {
                 if(point.position.x>position_arr[i].x-point.size&&point.position.x<position_arr[i].x+sizeS
@@ -354,8 +352,8 @@ void Snake::eat(Point &point,long long& num_score,int& max_score,int& time_big_p
         do
         {
             again=false;
-            point.position.x=rand()%(SCREEN_WIDTH-point.size+1);
-            point.position.y=rand()%(SCREEN_HEIGHT-point.size+1);
+            point.position.x=wallSize+rand()%(SCREEN_WIDTH-point.size-2*wallSize+1);
+            point.position.y=wallSize+46+(rand()%(SCREEN_HEIGHT-point.size-46-2*wallSize+1));
             for(int i=0; i<position_arr.size(); i++)
             {
                 if(point.position.x>position_arr[i].x-point.size&&point.position.x<position_arr[i].x+sizeS
@@ -380,8 +378,8 @@ void Snake::eat(Point &point,long long& num_score,int& max_score,int& time_big_p
         do
         {
             again=false;
-            point.position.x=rand()%(SCREEN_WIDTH-point.size+1);
-            point.position.y=rand()%(SCREEN_HEIGHT-point.size+1);
+            point.position.x=wallSize+rand()%(SCREEN_WIDTH-point.size-2*wallSize+1);
+            point.position.y=wallSize+46+(rand()%(SCREEN_HEIGHT-point.size-46-2*wallSize+1));
             for(int i=0; i<position_arr.size(); i++)
             {
                 if(point.position.x>position_arr[i].x-point.size&&point.position.x<position_arr[i].x+sizeS

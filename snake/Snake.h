@@ -16,13 +16,13 @@ struct Snake
 
     Snake();
 
-    void render(SDL_Renderer* renderer,char* head);
+    void render(SDL_Renderer* renderer,int& head,SDL_Surface* tempSurface, SDL_Texture** Image);
     void move();
     void turnUp();
     void turnDown();
     void turnLeft();
     void turnRight();
-    void eat(Point &point,long long& num_score,int& max_score,int& time_big_point_appears,int& time_to_minus);
+    void eat(Point &point,long long& num_score, int& max_score,int& time_big_point_appears, int& time_to_minus, int& wallSize);
 };
 
 #endif

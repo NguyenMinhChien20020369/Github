@@ -16,17 +16,35 @@ int main(int argc,char* argv[])
     int max_score=500;
     int time_big_point_appears;
     int time_to_minus=1000;
+    int ret_menu_type=0;
+    int wallSize=0;
 
     Snake snake;
     snake.position_arr.push_back(snake.positionH);
     snake.position_arr.push_back(snake.positionT);
     Point point;
 
+    SDL_Rect rect,box;
+
+    rect.x=0;
+    rect.y=0;
+    rect.w=SCREEN_WIDTH;
+    rect.h=46;
+
+    box.x=0+20;
+    box.y=46+20;
+    box.w=SCREEN_WIDTH-2*20-snake.sizeS;
+    box.h=SCREEN_HEIGHT-46-20*2-snake.sizeS;
+
+    SDL_Texture* Image[numImage];
+
+    gameImage(Image, renderer);
+
     do
     {
         again=false;
-        point.position.x=rand()%(SCREEN_WIDTH-point.size+1);
-        point.position.y=rand()%(SCREEN_HEIGHT-point.size+1);
+        point.position.x=wallSize+rand()%(SCREEN_WIDTH-point.size-2*wallSize+1);
+        point.position.y=wallSize+46+(rand()%(SCREEN_HEIGHT-point.size-2*wallSize+1));
         for(int i=0; i<snake.position_arr.size(); i++)
         {
             if(point.position.x>snake.position_arr[i].x-point.size&&point.position.x<snake.position_arr[i].x+snake.sizeS
@@ -39,19 +57,41 @@ int main(int argc,char* argv[])
     }
     while(again);
 
-    int ret_menu_first=menu_first(renderer);
-    if(ret_menu_first==1)
+    do
     {
-        play=false;
+        again=false;
+        int ret_menu_first=menu_first(renderer);
+        if(ret_menu_first==boxnum_of_menu_first-1)
+        {
+            play=false;
+        }
+        else if(ret_menu_first==boxnum_of_menu_first-2)
+        {
+            menu_type(renderer, again, ret_menu_type, Image, wallSize);
+        }
     }
+    while(again);
 
     chunk=Mix_LoadWAV("changebrg.wav");
     Mix_PlayChannel(-1,chunk,0);
 
     befor.key.keysym.sym=SDLK_d;
 
+    if(ret_menu_type==boxnum_of_menu_type-1)
+    {
+        snake.position_arr[0].x=snake.num*2;
+        snake.position_arr[0].y=46+snake.num;
+        snake.position_arr[1].x=snake.num;
+        snake.position_arr[1].y=46+snake.num;
+    }
+
     while(play)
     {
+        SDL_SetRenderDrawColor(renderer, 185, 211, 238, 255);
+        SDL_RenderClear(renderer);
+        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+        SDL_RenderFillRect(renderer,&rect);
+        printWall(renderer, snake, box, play, point, Image, ret_menu_type, head, befor, wallSize, num_score, time_to_minus, max_score);
         for(int i=1; i<snake.position_arr.size(); i++)
         {
             if(snake.position_arr[0].x==snake.position_arr[i].x&&snake.position_arr[0].y==snake.position_arr[i].y)
@@ -59,13 +99,13 @@ int main(int argc,char* argv[])
                 chunk=Mix_LoadWAV("die.wav");
                 Mix_PlayChannel(-1,chunk,0);
                 SDL_Delay(2000);
-                open_menu_final(renderer,num_score,play,befor,head,snake,point);
+                open_menu_final(renderer,num_score,play,befor,head,snake,point,ret_menu_type,wallSize, time_to_minus, max_score);
+                if(!play) break;
             }
         }
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderClear(renderer);
-        snake.render(renderer,head);
-        point.render(renderer);
+        if(!play) break;
+        snake.render(renderer,head,tempSurface, Image);
+        point.render(renderer,tempSurface, Image);
         printScore(renderer,num_score,"Score: ");
         if(snake.times==threshold_appears_big_point)
         {
@@ -108,35 +148,35 @@ int main(int argc,char* argv[])
                         break;
                     case SDLK_LEFT:
                         snake.turnLeft();
-                        head="snake_head_left.bmp";
+                        head=SNAKE_HEAD_LEFT;
                         break;
                     case SDLK_RIGHT:
                         snake.turnRight();
-                        head="snake_head_right.bmp";
+                        head=SNAKE_HEAD_RIGHT;
                         break;
                     case SDLK_DOWN:
                         snake.turnDown();
-                        head="snake_head_bot.bmp";
+                        head=SNAKE_HEAD_BOT;
                         break;
                     case SDLK_UP:
                         snake.turnUp();
-                        head="snake_head_top.bmp";
+                        head=SNAKE_HEAD_TOP;
                         break;
                     case SDLK_a:
                         snake.turnLeft();
-                        head="snake_head_left.bmp";
+                        head=SNAKE_HEAD_LEFT;
                         break;
                     case SDLK_d:
                         snake.turnRight();
-                        head="snake_head_right.bmp";
+                        head=SNAKE_HEAD_RIGHT;
                         break;
                     case SDLK_s:
                         snake.turnDown();
-                        head="snake_head_bot.bmp";
+                        head=SNAKE_HEAD_BOT;
                         break;
                     case SDLK_w:
                         snake.turnUp();
-                        head="snake_head_top.bmp";
+                        head=SNAKE_HEAD_TOP;
                         break;
                     default:
                         break;
@@ -145,7 +185,7 @@ int main(int argc,char* argv[])
                 }
             }
         }
-        snake.eat(point,num_score,max_score,time_big_point_appears,time_to_minus);
+        snake.eat(point,num_score,max_score,time_big_point_appears,time_to_minus, wallSize);
         snake.move();
     }
     quitSDL(window,renderer);
