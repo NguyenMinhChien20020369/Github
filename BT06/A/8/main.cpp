@@ -19,10 +19,9 @@ void combination(int member[],int k,int n)
     }
 }
 
-int main()
+int main(int argc, char** argv)
 {
-    int n;
-    cin>>n;
+    int n=atoi(argv[1]);
     int member[n];
     combination(member,n-1,n);
     return 0;
