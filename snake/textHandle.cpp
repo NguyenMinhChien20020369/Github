@@ -35,9 +35,9 @@ void textHandle::SetColor(const int& type)
     }
 }
 
-void textHandle::CreateText(SDL_Renderer* renderer)
+void textHandle::CreateText(SDL_Renderer* renderer, const char* fontType, const int& fontSize)
 {
-    TTF_Font* font=TTF_OpenFont("Neverwinter.ttf",40);
+    TTF_Font* font=TTF_OpenFont(fontType, fontSize);
     textSurface=TTF_RenderText_Solid(font,text_.c_str(),text_color_);
     texture=SDL_CreateTextureFromSurface(renderer,textSurface);
     SDL_FreeSurface(textSurface);

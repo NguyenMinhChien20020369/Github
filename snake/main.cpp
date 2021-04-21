@@ -3,38 +3,34 @@
 #include "SDL_setup.h"
 #include "Snake.h"
 
-using namespace std;
-
-int main(int argc,char* argv[])
+int main(int argc, char* argv[])
 {
     srand(time(nullptr));
     if(!initSDL(window,renderer))
     {
         return -1;
     }
-    bool play=true,Can_move;
-    int max_score=500;
-    int time_big_point_appears;
-    int time_to_minus=1000;
-    int ret_menu_type=0;
-    int wallSize=0;
+    bool play= true, Can_move;
+    int time_to_minus= 1000;
+    int ret_menu_type= 0;
+    int wallSize= 0;
 
     Snake snake;
     snake.position_arr.push_back(snake.positionH);
     snake.position_arr.push_back(snake.positionT);
     Point point;
 
-    SDL_Rect rect,box;
+    SDL_Rect rect, box;
 
     rect.x=0;
     rect.y=0;
     rect.w=SCREEN_WIDTH;
-    rect.h=46;
+    rect.h=SCORE_BOX_HEIGHT;
 
-    box.x=0+20;
-    box.y=46+20;
-    box.w=SCREEN_WIDTH-2*20-snake.sizeS;
-    box.h=SCREEN_HEIGHT-46-20*2-snake.sizeS;
+    box.x= wallSize;
+    box.y= SCORE_BOX_HEIGHT+ wallSize;
+    box.w= SCREEN_WIDTH-2*wallSize-snake.sizeS;
+    box.h= SCREEN_HEIGHT-SCORE_BOX_HEIGHT-wallSize*2-snake.sizeS;
 
     SDL_Texture* Image[numImage];
 
@@ -44,7 +40,7 @@ int main(int argc,char* argv[])
     {
         again=false;
         point.position.x=wallSize+rand()%(SCREEN_WIDTH-point.size-2*wallSize+1);
-        point.position.y=wallSize+46+(rand()%(SCREEN_HEIGHT-point.size-2*wallSize+1));
+        point.position.y=wallSize+SCORE_BOX_HEIGHT+(rand()%(SCREEN_HEIGHT-point.size-2*wallSize+1));
         for(int i=0; i<snake.position_arr.size(); i++)
         {
             if(point.position.x>snake.position_arr[i].x-point.size&&point.position.x<snake.position_arr[i].x+snake.sizeS
@@ -60,7 +56,7 @@ int main(int argc,char* argv[])
     do
     {
         again=false;
-        int ret_menu_first=menu_first(renderer);
+        int ret_menu_first=menu_first(renderer, Image);
         if(ret_menu_first==boxnum_of_menu_first-1)
         {
             play=false;
@@ -80,9 +76,9 @@ int main(int argc,char* argv[])
     if(ret_menu_type==boxnum_of_menu_type-1)
     {
         snake.position_arr[0].x=snake.num*2;
-        snake.position_arr[0].y=46+snake.num;
+        snake.position_arr[0].y=SCORE_BOX_HEIGHT+snake.num;
         snake.position_arr[1].x=snake.num;
-        snake.position_arr[1].y=46+snake.num;
+        snake.position_arr[1].y=SCORE_BOX_HEIGHT+snake.num;
     }
 
     while(play)
@@ -90,7 +86,7 @@ int main(int argc,char* argv[])
         SDL_SetRenderDrawColor(renderer, 185, 211, 238, 255);
         SDL_RenderClear(renderer);
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-        SDL_RenderFillRect(renderer,&rect);
+        SDL_RenderFillRect(renderer, &rect);
         printWall(renderer, snake, box, play, point, Image, ret_menu_type, head, befor, wallSize, num_score, time_to_minus, max_score);
         for(int i=1; i<snake.position_arr.size(); i++)
         {
@@ -99,14 +95,14 @@ int main(int argc,char* argv[])
                 chunk=Mix_LoadWAV("die.wav");
                 Mix_PlayChannel(-1,chunk,0);
                 SDL_Delay(2000);
-                open_menu_final(renderer,num_score,play,befor,head,snake,point,ret_menu_type,wallSize, time_to_minus, max_score);
+                open_menu_final(renderer,num_score,play,befor,head,snake,point,ret_menu_type,wallSize, time_to_minus, max_score,Image);
                 if(!play) break;
             }
         }
         if(!play) break;
-        snake.render(renderer,head,tempSurface, Image);
+        snake.render(renderer, head, Image);
         point.render(renderer, Image);
-        printScore(renderer,num_score,"Score: ");
+        printScore(renderer, num_score, "Score: ");
         if(snake.times==threshold_appears_big_point)
         {
             printTime(renderer, time_to_minus);
@@ -115,7 +111,7 @@ int main(int argc,char* argv[])
         SDL_RenderPresent(renderer);
         //SDL_UpdateWindowSurface(window);
 
-        SDL_Delay(time_delay);
+        SDL_Delay(speed);
 
         if(SDL_PollEvent(&e)!=0)
         {
@@ -143,9 +139,6 @@ int main(int argc,char* argv[])
                 {
                     switch (e.key.keysym.sym)
                     {
-                    case SDLK_ESCAPE:
-                        play=false;
-                        break;
                     case SDLK_LEFT:
                         snake.turnLeft();
                         head=SNAKE_HEAD_LEFT;
@@ -185,7 +178,7 @@ int main(int argc,char* argv[])
                 }
             }
         }
-        snake.eat(point,num_score,max_score,time_big_point_appears,time_to_minus, wallSize);
+        snake.eat(point, num_score, time_to_minus, wallSize);
         snake.move();
     }
     quitSDL(window,renderer);

@@ -7,13 +7,18 @@ using namespace std;
 
 Snake::Snake()
 {
+    sizeS=20;
+    num=20;
+    stepX=0;
+    stepY=0;
+    times=0;
     this->positionH.x=num;
-    this->positionH.y=46;
+    this->positionH.y=SCORE_BOX_HEIGHT;
     this->positionT.x=0;
-    this->positionT.y=46;
+    this->positionT.y=SCORE_BOX_HEIGHT;
 }
 
-void Snake::render(SDL_Renderer* renderer,int& head,SDL_Surface* tempSurface, SDL_Texture** Image)
+void Snake::render(SDL_Renderer* renderer, const int& head, SDL_Texture** const Image) const
 {
     for(int i=0; i<position_arr.size(); i++)
     {
@@ -25,13 +30,13 @@ void Snake::render(SDL_Renderer* renderer,int& head,SDL_Surface* tempSurface, SD
         {
             //1
             //2
-            if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y+sizeS==position_arr[i].y)
+            if(position_arr[i-1].x== position_arr[i].x&& position_arr[i-1].y+ sizeS== position_arr[i].y)
             {
-                tail=SNAKE_TAIL_BOT;
+                tail= SNAKE_TAIL_BOT;
             }
-            else if(position_arr[i-1].x==position_arr[i].x&&position_arr[i-1].y<position_arr[i].y)
+            else if(position_arr[i-1].x== position_arr[i].x&& position_arr[i-1].y< position_arr[i].y)
             {
-                tail=SNAKE_TAIL_TOP;
+                tail= SNAKE_TAIL_TOP;
             }
             //12
             else if(position_arr[i-1].x+sizeS==position_arr[i].x&&position_arr[i-1].y==position_arr[i].y)
@@ -281,8 +286,8 @@ void Snake::move()
     }
     position_arr[0].x+=stepX;
     position_arr[0].y+=stepY;
-    if(position_arr[0].y>=SCREEN_HEIGHT)position_arr[0].y=46;
-    if(position_arr[0].y<46)position_arr[0].y=SCREEN_HEIGHT-sizeS;
+    if(position_arr[0].y>=SCREEN_HEIGHT)position_arr[0].y=SCORE_BOX_HEIGHT;
+    if(position_arr[0].y<SCORE_BOX_HEIGHT)position_arr[0].y=SCREEN_HEIGHT-sizeS;
     if(position_arr[0].x>=SCREEN_WIDTH)position_arr[0].x=0;
     if(position_arr[0].x<0)position_arr[0].x=SCREEN_WIDTH-sizeS;
 }
@@ -311,7 +316,7 @@ void Snake::turnRight()
     stepY=0;
 }
 
-void Snake::eat(Point &point,long long& num_score,int& max_score,int& time_big_point_appears,int& time_to_minus, int& wallSize)
+void Snake::eat(Point& point, long long& num_score, int& time_to_minus, const int& wallSize)
 {
     if(time_to_minus==5000)
     {
@@ -320,7 +325,7 @@ void Snake::eat(Point &point,long long& num_score,int& max_score,int& time_big_p
         {
             again=false;
             point.position.x=wallSize+rand()%(SCREEN_WIDTH-point.size-2*wallSize+1);
-            point.position.y=wallSize+46+(rand()%(SCREEN_HEIGHT-point.size-46-2*wallSize+1));
+            point.position.y=wallSize+SCORE_BOX_HEIGHT+(rand()%(SCREEN_HEIGHT-point.size-SCORE_BOX_HEIGHT-2*wallSize+1));
             for(int i=0; i<position_arr.size(); i++)
             {
                 if(point.position.x>position_arr[i].x-point.size&&point.position.x<position_arr[i].x+sizeS
@@ -339,7 +344,7 @@ void Snake::eat(Point &point,long long& num_score,int& max_score,int& time_big_p
     if(times==threshold_appears_big_point&&SDL_GetTicks()-time_big_point_appears>time_to_minus)
     {
         time_to_minus+=1000;
-        max_score-=(500-100)/4;
+        max_score-= (500-100)/4;
     }
     if(this->times==threshold_appears_big_point&&this->position_arr[0].x>point.position.x-sizeS&&this->position_arr[0].x<point.position.x + point.size
             &&this->position_arr[0].y>point.position.y-sizeS&&this->position_arr[0].y<point.position.y + point.size)
@@ -353,7 +358,7 @@ void Snake::eat(Point &point,long long& num_score,int& max_score,int& time_big_p
         {
             again=false;
             point.position.x=wallSize+rand()%(SCREEN_WIDTH-point.size-2*wallSize+1);
-            point.position.y=wallSize+46+(rand()%(SCREEN_HEIGHT-point.size-46-2*wallSize+1));
+            point.position.y=wallSize+SCORE_BOX_HEIGHT+(rand()%(SCREEN_HEIGHT-point.size-SCORE_BOX_HEIGHT-2*wallSize+1));
             for(int i=0; i<position_arr.size(); i++)
             {
                 if(point.position.x>position_arr[i].x-point.size&&point.position.x<position_arr[i].x+sizeS
@@ -379,7 +384,7 @@ void Snake::eat(Point &point,long long& num_score,int& max_score,int& time_big_p
         {
             again=false;
             point.position.x=wallSize+rand()%(SCREEN_WIDTH-point.size-2*wallSize+1);
-            point.position.y=wallSize+46+(rand()%(SCREEN_HEIGHT-point.size-46-2*wallSize+1));
+            point.position.y=wallSize+SCORE_BOX_HEIGHT+(rand()%(SCREEN_HEIGHT-point.size-SCORE_BOX_HEIGHT-2*wallSize+1));
             for(int i=0; i<position_arr.size(); i++)
             {
                 if(point.position.x>position_arr[i].x-point.size&&point.position.x<position_arr[i].x+sizeS
@@ -395,13 +400,11 @@ void Snake::eat(Point &point,long long& num_score,int& max_score,int& time_big_p
         {
             point.size=30;
             time_big_point_appears=SDL_GetTicks();
-            //ting
             chunk=Mix_LoadWAV("eat_and_appears.wav");
             Mix_PlayChannel(-1,chunk,0);
         }
         else
         {
-            //xoet
             chunk=Mix_LoadWAV("eat_small_point.wav");
             Mix_PlayChannel(-1,chunk,0);
         }

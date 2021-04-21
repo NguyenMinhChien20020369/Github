@@ -7,12 +7,11 @@
 #include "Snake.h"
 #include "Point.h"
 
-using namespace std;
-
 static const int SCREEN_WIDTH = 800;
 static const int SCREEN_HEIGHT = 646;
+static const int SCORE_BOX_HEIGHT= 46;
 static const string WINDOW_TITLE="Snake";
-static const int time_delay=60;
+static const int speed=60;
 static const int threshold_appears_big_point=5;
 static const int boxnum_of_menu_first= 3;
 static const int boxnum_of_menu_type= 2;
@@ -21,13 +20,16 @@ static const int numImage= 17;
 static SDL_Window* window=NULL;
 static SDL_Renderer* renderer=NULL;
 static SDL_Surface* tempSurface=NULL;
-static SDL_Surface* img_menu=NULL;
 static SDL_Texture* texture=NULL;
 static Mix_Chunk* chunk=NULL;
 static SDL_Event e,befor;
 static SDL_Rect sourceRect;
 static SDL_Rect desRect;
-static int number=1;
+static int time_big_point_appears;
+static int max_score=500;
+static bool again;
+static long long num_score=0;
+static int time_to_minus=1000;
 
 enum ImageType
 {
@@ -53,22 +55,19 @@ enum ImageType
 static int head=SNAKE_HEAD_RIGHT;
 static int tail;
 static int body;
-static bool again;
-static long long num_score=0;
 
-void logSDLError(ostream& os, const string &msg, bool fatal);
+bool inRect(const int& x,const int& y,const SDL_Rect& rect);
+void logSDLError(ostream& os, const string &msg, const bool& fatal);
 bool initSDL(SDL_Window* &window, SDL_Renderer* &renderer);
 void quitSDL(SDL_Window* window, SDL_Renderer* renderer);
-void waitUntilKeyPressed();
-void printScore(SDL_Renderer* renderer,long long& num_score,string _mes_score);
-void printTime(SDL_Renderer* renderer,int& time_to_minus);
-void printWall(SDL_Renderer* renderer, Snake& snake, SDL_Rect& box, bool& play, Point& point, SDL_Texture** Image, int& ret_menu_type, int& head, SDL_Event& befor, int& wallSize, long long& num_score, int& time_to_minus, int& max_score);
-int menu_first(SDL_Renderer* renderer);
-void menu_type(SDL_Renderer* renderer, bool& again, int& ret_menu_type, SDL_Texture** Image, int& wallSize);
-int menu_final(SDL_Renderer* renderer, long long& num_score);
-bool inRect(const int& x,const int& y,const SDL_Rect& rect);
-void open_menu_final(SDL_Renderer* renderer,long long& num_score,bool& play,SDL_Event& befor,int& head,Snake& snake, Point& point, int& ret_menu_type, int& wallSize, int& time_to_minus, int& max_score);
-SDL_Texture* create_texture(string name_texture, SDL_Renderer* renderer);
-void gameImage(SDL_Texture** Image, SDL_Renderer* renderer);
+int menu_first(SDL_Renderer*& renderer, SDL_Texture** const Image);
+void menu_type(SDL_Renderer* renderer, bool& again, int& ret_menu_type, SDL_Texture** const Image, int& wallSize);
+int menu_final(SDL_Renderer*& renderer, const long long&  num_score, SDL_Texture** const Image);
+void open_menu_final(SDL_Renderer*& renderer, long long& num_score, bool& play, SDL_Event& befor, int& head, Snake& snake, Point& point, const int& ret_menu_type, const int& wallSize, int& time_to_minus, int& max_score, SDL_Texture** const Image);
+void printScore(SDL_Renderer*& renderer, const long long& num_score, const string& _mes_score);
+void printTime(SDL_Renderer*& renderer, const int& time_to_minus);
+void printWall(SDL_Renderer*& renderer, Snake& snake, const SDL_Rect& box, bool& play, Point& point, SDL_Texture** const Image, const int& ret_menu_type, int& head, SDL_Event& befor, const int& wallSize, long long& num_score, int& time_to_minus, int& max_score);
+SDL_Texture* create_texture(const string& name_texture, SDL_Renderer*& renderer, const bool& setColorKey);
+void gameImage(SDL_Texture** Image, SDL_Renderer*& renderer);
 
 #endif // SDL_setup_h

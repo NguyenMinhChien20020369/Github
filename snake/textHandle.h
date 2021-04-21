@@ -26,7 +26,7 @@ struct textHandle
     void SetRect(const int& x, const int& y);
     void SetText(const string text);
     void SetColor(const int& type);
-    void CreateText(SDL_Renderer* renderer);
+    void CreateText(SDL_Renderer* renderer, const char* fontType, const int& fontSize);
 };
 
 #endif // TEXT_HANDLE_H_
