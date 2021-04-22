@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <string>
 
 using namespace std;
 
@@ -7,6 +8,8 @@ int main(int argc, char** argv)
 {
     string str1= argv[1];
     string str2= argv[2];
+    string compstr;
+    int temp=0, i=0;
     if(str1.length()>str2.length())
     {
         cout<<0;
@@ -24,8 +27,26 @@ int main(int argc, char** argv)
     }
     else
     {
-
+        for(; i<str1.length(); ++i)
+        {
+            compstr+=str2[i];
+        }
+        do
+        {
+            if(strcmp(str1.c_str(), compstr.c_str())==0)
+            {
+                ++temp;
+            }
+            compstr.erase(0,1);
+            if(i==str2.length())
+            {
+                break;
+            }
+            compstr+=str2[i];
+            ++i;
+        }
+        while(true);
+        cout<<temp;
     }
-    //strcmp();
     return 0;
 }
