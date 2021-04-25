@@ -4,7 +4,7 @@
 
 using namespace std;
 
-bool inRect(const int& x,const int& y,const SDL_Rect& rect)
+bool inRect(const int& x, const int& y, const SDL_Rect& rect)
 {
     return (x>=rect.x&&x<=rect.x+rect.w&&y>=rect.y&&y<=rect.y+rect.h);
 }
@@ -267,17 +267,23 @@ int menu_final(SDL_Renderer*& renderer, const long long& num_score, SDL_Texture*
     pos_arr[0].y=200;
     pos_arr[1].x=100;
     pos_arr[1].y=250;
+    pos_arr[2].x=100;
+    pos_arr[2].y=300;
 
     textHandle text_menu[boxnum_of_menu_final];
     text_menu[0].SetText("Play again");
     text_menu[0].SetColor(textHandle::BLACK_TEXT);
     text_menu[0].SetRect(pos_arr[0].x,pos_arr[0].y);
 
-    text_menu[1].SetText("Exit");
+    text_menu[1].SetText("Game type");
     text_menu[1].SetColor(textHandle::BLACK_TEXT);
     text_menu[1].SetRect(pos_arr[1].x,pos_arr[1].y);
 
-    bool selected[boxnum_of_menu_final]= {0,0};
+    text_menu[2].SetText("Exit");
+    text_menu[2].SetColor(textHandle::BLACK_TEXT);
+    text_menu[2].SetRect(pos_arr[2].x,pos_arr[2].y);
+
+    bool selected[boxnum_of_menu_final]= {0,0, 0};
     int xm=0;
     int ym=0;
 
@@ -354,53 +360,62 @@ int menu_final(SDL_Renderer*& renderer, const long long& num_score, SDL_Texture*
     }
 }
 
-void open_menu_final(SDL_Renderer*& renderer, long long& num_score, bool& play, SDL_Event& befor, int& head, Snake& snake, Point& point, const int& ret_menu_type, const int& wallSize, int& time_to_minus, int& max_score, SDL_Texture** const Image)
+void open_menu_final(SDL_Renderer*& renderer, long long& num_score, bool& play, SDL_Event& befor, int& head, Snake& snake, Point& point, int& ret_menu_type, int& wallSize, int& time_to_minus, int& max_score, SDL_Texture** const Image, bool& again)
 {
-    int ret_menu_final=menu_final(renderer, num_score, Image);
-    if(ret_menu_final== boxnum_of_menu_final-1)
+    do
     {
-        play=false;
-    }
-    else
-    {
-        snake.times=0;
-        point.size=20;
-        time_to_minus=1000;
-        max_score=500;
-        befor.key.keysym.sym=SDLK_d;
-        head=SNAKE_HEAD_RIGHT;
-        snake.stepX=0;
-        snake.stepY=0;
-        num_score=0;
-        snake.position_arr.erase(snake.position_arr.begin(),snake.position_arr.begin()+snake.position_arr.size());
-        snake.position_arr.push_back(snake.positionH);
-        snake.position_arr.push_back(snake.positionT);
-        if(ret_menu_type==boxnum_of_menu_type-1)
+        again=false;
+        int ret_menu_final=menu_final(renderer, num_score, Image);
+        if(ret_menu_final== boxnum_of_menu_final-1)
         {
-            snake.position_arr[0].x=snake.num*2;
-            snake.position_arr[0].y=SCORE_BOX_HEIGHT+snake.num;
-            snake.position_arr[1].x=snake.num;
-            snake.position_arr[1].y=SCORE_BOX_HEIGHT+snake.num;
+            play=false;
         }
-        do
+        else if(ret_menu_final== boxnum_of_menu_final-2)
         {
-            again=false;
-            point.position.x=wallSize+rand()%(SCREEN_WIDTH-point.size-2*wallSize+1);
-            point.position.y=wallSize+SCORE_BOX_HEIGHT+(rand()%(SCREEN_HEIGHT-point.size-SCORE_BOX_HEIGHT-2*wallSize+1));
-            for(int i=0; i<snake.position_arr.size(); i++)
+            menu_type(renderer, again, ret_menu_type, Image, wallSize);
+        }
+        else
+        {
+            snake.times=0;
+            point.size=20;
+            time_to_minus=1000;
+            max_score=500;
+            befor.key.keysym.sym=SDLK_d;
+            head=SNAKE_HEAD_RIGHT;
+            snake.stepX=0;
+            snake.stepY=0;
+            num_score=0;
+            snake.position_arr.erase(snake.position_arr.begin(),snake.position_arr.begin()+snake.position_arr.size());
+            snake.position_arr.push_back(snake.positionH);
+            snake.position_arr.push_back(snake.positionT);
+            if(ret_menu_type==boxnum_of_menu_type-1)
             {
-                if(point.position.x>snake.position_arr[i].x-point.size&&point.position.x<snake.position_arr[i].x+snake.sizeS
-                        &&point.position.y>snake.position_arr[i].y-point.size&&point.position.y<snake.position_arr[i].y+snake.sizeS)
+                snake.position_arr[0].x=snake.num*2;
+                snake.position_arr[0].y=SCORE_BOX_HEIGHT+snake.num;
+                snake.position_arr[1].x=snake.num;
+                snake.position_arr[1].y=SCORE_BOX_HEIGHT+snake.num;
+            }
+            do
+            {
+                again=false;
+                point.position.x=wallSize+rand()%(SCREEN_WIDTH-point.size-2*wallSize+1);
+                point.position.y=wallSize+SCORE_BOX_HEIGHT+(rand()%(SCREEN_HEIGHT-point.size-SCORE_BOX_HEIGHT-2*wallSize+1));
+                for(int i=0; i<snake.position_arr.size(); i++)
                 {
-                    again=true;
-                    break;
+                    if(point.position.x>snake.position_arr[i].x-point.size&&point.position.x<snake.position_arr[i].x+snake.sizeS
+                            &&point.position.y>snake.position_arr[i].y-point.size&&point.position.y<snake.position_arr[i].y+snake.sizeS)
+                    {
+                        again=true;
+                        break;
+                    }
                 }
             }
+            while(again);
+            chunk=Mix_LoadWAV("changebrg.wav");
+            Mix_PlayChannel(-1,chunk,0);
         }
-        while(again);
-        chunk=Mix_LoadWAV("changebrg.wav");
-        Mix_PlayChannel(-1,chunk,0);
     }
+    while(again);
 }
 
 void printScore(SDL_Renderer*& renderer, const long long& num_score, const string& _mes_score)
@@ -427,7 +442,7 @@ void printTime(SDL_Renderer*& renderer, const int& time_to_minus)
     time.CreateText(renderer, fontType, fontSize);
 }
 
-void printWall(SDL_Renderer*& renderer, Snake& snake, const SDL_Rect& box, bool& play, Point& point, SDL_Texture** const Image, const int& ret_menu_type, int& head, SDL_Event& befor, const int& wallSize, long long& num_score, int& time_to_minus, int& max_score)
+void printWall(SDL_Renderer*& renderer, Snake& snake, const SDL_Rect& box, bool& play, Point& point, SDL_Texture** const Image, int& ret_menu_type, int& head, SDL_Event& befor, int& wallSize, long long& num_score, int& time_to_minus, int& max_score, bool& again)
 {
     if(ret_menu_type!=boxnum_of_menu_type-1)
     {
@@ -438,7 +453,8 @@ void printWall(SDL_Renderer*& renderer, Snake& snake, const SDL_Rect& box, bool&
         chunk=Mix_LoadWAV("die.wav");
         Mix_PlayChannel(-1,chunk,0);
         SDL_Delay(2000);
-        open_menu_final(renderer,num_score,play,befor,head,snake,point,ret_menu_type,wallSize,time_to_minus, max_score, Image);
+        open_menu_final(renderer,num_score,play,befor,head,snake,point,ret_menu_type,wallSize,time_to_minus, max_score, Image, again);
+        return;
     }
     texture=Image[WALL];
     SDL_QueryTexture(texture, NULL, NULL, &sourceRect.w,&sourceRect.h);

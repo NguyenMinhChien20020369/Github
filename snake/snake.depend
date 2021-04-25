@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1619014450 source:d:\chuan_muc\github\snake\main.cpp
+1619339172 source:d:\chuan_muc\github\snake\main.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	"SDL_setup.h"
@@ -13,12 +13,12 @@
 	<bits/stdc++.h>
 	<SDL.h>
 
-1619013985 source:d:\chuan_muc\github\snake\sdl_setup.cpp
+1619339172 source:d:\chuan_muc\github\snake\sdl_setup.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	"SDL_setup.h"
 
-1619014378 d:\chuan_muc\github\snake\sdl_setup.h
+1619338047 d:\chuan_muc\github\snake\sdl_setup.h
 	<SDL.h>
 	<SDL_mixer.h>
 	"textHandle.h"

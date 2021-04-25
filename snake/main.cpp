@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     bool play= true, Can_move;
     int time_to_minus= 1000;
     int ret_menu_type= 0;
-    int wallSize= 0;
+    int wallSize= 20;
 
     Snake snake;
     snake.position_arr.push_back(snake.positionH);
@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
         SDL_RenderClear(renderer);
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
         SDL_RenderFillRect(renderer, &rect);
-        printWall(renderer, snake, box, play, point, Image, ret_menu_type, head, befor, wallSize, num_score, time_to_minus, max_score);
+        printWall(renderer, snake, box, play, point, Image, ret_menu_type, head, befor, wallSize, num_score, time_to_minus, max_score, again);
         for(int i=1; i<snake.position_arr.size(); i++)
         {
             if(snake.position_arr[0].x==snake.position_arr[i].x&&snake.position_arr[0].y==snake.position_arr[i].y)
@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
                 chunk=Mix_LoadWAV("die.wav");
                 Mix_PlayChannel(-1,chunk,0);
                 SDL_Delay(2000);
-                open_menu_final(renderer,num_score,play,befor,head,snake,point,ret_menu_type,wallSize, time_to_minus, max_score,Image);
+                open_menu_final(renderer,num_score,play,befor,head,snake,point,ret_menu_type,wallSize, time_to_minus, max_score,Image, again);
                 if(!play) break;
             }
         }
